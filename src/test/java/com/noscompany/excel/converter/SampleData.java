@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -28,7 +29,13 @@ public class SampleData {
                 "PL",
                 sampleAddresses(),
                 samplePhones(),
-                List.of("qwe", "asd", "sifjsiofjsi"));
+                sampleAliases());
+    }
+
+    private static List<String> sampleAliases() {
+        List<String> aliases = List.of("1 alias", "2 alias", "3 alias", "4 alias");
+        long i = new Random().nextInt(aliases.size());
+        return aliases.stream().limit(i).collect(toList());
     }
 
     public static List<Phone> samplePhones() {
