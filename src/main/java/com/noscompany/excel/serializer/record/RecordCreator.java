@@ -2,11 +2,11 @@ package com.noscompany.excel.serializer.record;
 
 import com.noscompany.excel.serializer.commons.Config;
 import com.noscompany.excel.serializer.field.extractor.FieldExtractor;
-import io.vavr.collection.Vector;
+import com.noscompany.excel.serializer.field.extractor.SimpleField;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.noscompany.excel.serializer.commons.ExcelUtils.objectsInsideAreSimple;
 import static java.util.stream.Collectors.toList;
@@ -48,13 +48,15 @@ public class RecordCreator {
     }
 
     private List<Record> fromComplexCollection(Collection<?> collection) {
-        return Vector.ofAll(collection)
-                .filter(Objects::nonNull)
-                .flatMap(fieldExtractor::simpleFields)
-                .map(simpleField -> {
-                    List<String> values = collection.stream().map(simpleField::getValue).collect(toList());
-                    return Record.record(simpleField.getName(), values, nameColor(), valuesColor());
-                })
-                .toJavaList();
+        if (collection.isEmpty())
+            return List.of();
+        Object object = collection.iterator().next();
+        List<SimpleField> simpleFields = fieldExtractor.simpleFields(object);
+        List<Record> result = new LinkedList<>();
+        for (SimpleField sf : simpleFields) {
+            List<String> values = collection.stream().map(sf::getValue).collect(toList());
+            result.add(Record.record(sf.getName(), values, nameColor(), valuesColor()));
+        }
+        return result;
     }
 }
