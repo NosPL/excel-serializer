@@ -4,8 +4,9 @@ import com.noscompany.excel.serializer.commons.CellAddress;
 import com.noscompany.excel.serializer.commons.CellEntry;
 import com.noscompany.excel.serializer.commons.Config;
 import com.noscompany.excel.serializer.commons.Size;
-import com.noscompany.excel.serializer.entry.element.EntryElementCreator;
-import com.noscompany.excel.serializer.entry.element.EntryElementList;
+import com.noscompany.excel.serializer.sheet.entry.element.EntryElementCreator;
+import com.noscompany.excel.serializer.sheet.entry.element.EntryElementList;
+import com.noscompany.excel.serializer.sheet.entry.positioning.PositioningEntryElementsOnSheetEntry;
 import lombok.SneakyThrows;
 
 import java.util.List;

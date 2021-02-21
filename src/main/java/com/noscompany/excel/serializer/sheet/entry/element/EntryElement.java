@@ -1,10 +1,10 @@
-package com.noscompany.excel.serializer.entry.element;
+package com.noscompany.excel.serializer.sheet.entry.element;
 
 import com.noscompany.excel.serializer.commons.CellAddress;
 import com.noscompany.excel.serializer.commons.CellEntry;
 import com.noscompany.excel.serializer.commons.Config.RecordLayout;
 import com.noscompany.excel.serializer.commons.cursor.Cursor;
-import com.noscompany.excel.serializer.record.Record;
+import com.noscompany.excel.serializer.sheet.entry.element.record.Record;
 import io.vavr.control.Option;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +18,8 @@ import static com.noscompany.excel.serializer.commons.Config.RecordLayout.HORIZO
 @AllArgsConstructor
 @Getter
 public class EntryElement {
-    private Option<Label> label;
-    private List<Record> records;
+    private final Option<Label> label;
+    private final List<Record> records;
 
 
     public List<CellEntry> draw(CellAddress position, RecordLayout recordLayout) {

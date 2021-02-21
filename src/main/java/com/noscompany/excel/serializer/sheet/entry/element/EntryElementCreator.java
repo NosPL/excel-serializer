@@ -1,20 +1,18 @@
-package com.noscompany.excel.serializer.entry.element;
+package com.noscompany.excel.serializer.sheet.entry.element;
 
-import com.noscompany.excel.serializer.annotations.ClassName;
 import com.noscompany.excel.serializer.commons.Config;
-import com.noscompany.excel.serializer.entry.element.EntryElement.Label;
 import com.noscompany.excel.serializer.field.extractor.CollectionField;
 import com.noscompany.excel.serializer.field.extractor.ComplexField;
 import com.noscompany.excel.serializer.field.extractor.FieldExtractor;
-import com.noscompany.excel.serializer.record.Record;
-import com.noscompany.excel.serializer.record.RecordCreator;
+import com.noscompany.excel.serializer.sheet.entry.element.EntryElement.Label;
+import com.noscompany.excel.serializer.sheet.entry.element.record.Record;
+import com.noscompany.excel.serializer.sheet.entry.element.record.RecordCreator;
 import io.vavr.control.Option;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
-import static com.noscompany.excel.serializer.commons.ExcelUtils.getAnnotation;
+import static com.noscompany.excel.serializer.commons.ExcelUtils.name;
 
 public class EntryElementCreator {
     private final Config config;
@@ -77,11 +75,7 @@ public class EntryElementCreator {
     }
 
     private Label objectLabel(Object object) {
-        String labelValue = getAnnotation(object.getClass(), ClassName.class)
-                .map(ClassName::value)
-                .filter(Objects::nonNull)
-                .filter(s -> !s.isEmpty())
-                .getOrElse(object.getClass().getSimpleName());
+        String labelValue = name(object.getClass());
         return new Label(labelValue, config.getLabelColor());
     }
 }

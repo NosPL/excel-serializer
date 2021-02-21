@@ -7,9 +7,9 @@ import io.vavr.collection.Vector;
 
 import java.util.List;
 
-class CellEntrySizeCalculating {
+public class CellEntrySizeCalculating {
 
-    Size calculate(List<CellEntry> cellEntries) {
+    public Size calculate(List<CellEntry> cellEntries) {
         int latestColumn = getCellAddresses(cellEntries).map(CellAddress::getColumn).sorted().last();
         int earliestColumn = getCellAddresses(cellEntries).map(CellAddress::getColumn).sorted().reverse().last();
         int latestRow = getCellAddresses(cellEntries).map(CellAddress::getRow).sorted().last();

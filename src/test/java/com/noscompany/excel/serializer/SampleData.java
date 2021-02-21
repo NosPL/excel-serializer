@@ -13,14 +13,14 @@ public class SampleData {
 
     private static final Random random = new Random();
 
-    static List<Employee> samplePeople(int count) {
+    static List<Employee> sampleEmployees(int count) {
         return IntStream
                 .rangeClosed(1, count)
-                .mapToObj(i -> i % 10 == 0 ? null : samplePerson())
+                .mapToObj(i -> sampleEmployee())
                 .collect(toList());
     }
 
-    public static Employee samplePerson() {
+    public static Employee sampleEmployee() {
         return new Employee(
                 SomeObject.sample(),
                 SomeOtherObject.sample(),
@@ -30,9 +30,10 @@ public class SampleData {
                 LocalDate.of(1990, 10, 5).toString(),
                 30,
                 "PL",
-                sampleAddresses(),
-                samplePhones(),
-                sampleAliases());
+                randomNumberOf(sampleAddresses()),
+                randomNumberOf(samplePhones()),
+                randomNumberOf(sampleAliases())
+        );
     }
 
     private static List<String> sampleAliases() {
@@ -44,10 +45,7 @@ public class SampleData {
                 "6 alias", "7 alias", "8 alias", "9 alias", "10 alias",
                 "11 alias", "12 alias", "13 alias", "14 alias", "15 alias"));
         aliases.add(5, null);
-        long i = random.nextInt(aliases.size());
-        if (i == aliases.size() - 1)
-            return null;
-        return aliases.stream().limit(i).collect(toList());
+        return aliases;
     }
 
     public static List<Phone> samplePhones() {
@@ -77,10 +75,7 @@ public class SampleData {
         phones.add(new Phone("0048", "699 222 222"));
         phones.add(new Phone("0048", "888 888 888"));
         phones.add(new Phone("0048", "999 999 999"));
-        long i = random.nextInt(phones.size());
-        if (i == phones.size() - 1)
-            return null;
-        return phones.stream().limit(i).collect(toList());
+        return phones;
     }
 
     public static List<Address> sampleAddresses() {
@@ -116,9 +111,19 @@ public class SampleData {
         addresses.add(new Address("Koszalinska", 10, 10, "99-999", "Krakow"));
         addresses.add(new Address("Polczynska", 99, 0, "66-666", "Lobez"));
         addresses.add(new Address("Kolejowa", 66, 66, "11-111", "Szczecin"));
-        long i = random.nextInt(addresses.size());
-        if (i == addresses.size() - 1)
+        return addresses;
+    }
+
+    public static <T> List<T> numberOf(List<T> list, int count) {
+        while (list.size() < count)
+            list.addAll(list);
+        return list.stream().limit(count).collect(toList());
+    }
+
+    public static <T> List<T> randomNumberOf(List<T> list) {
+        long i = random.nextInt(list.size());
+        if (i == list.size() - 1)
             return null;
-        return addresses.stream().limit(i).collect(toList());
+        return list.stream().limit(i).collect(toList());
     }
 }

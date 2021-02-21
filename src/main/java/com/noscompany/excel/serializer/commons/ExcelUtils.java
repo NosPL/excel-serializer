@@ -1,5 +1,6 @@
 package com.noscompany.excel.serializer.commons;
 
+import com.noscompany.excel.serializer.annotations.ClassName;
 import com.noscompany.excel.serializer.annotations.FieldName;
 import io.vavr.control.Option;
 
@@ -54,5 +55,13 @@ public class ExcelUtils {
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
                 .getOrElse(field.getName());
+    }
+
+    public static String name(Class<?> clazz) {
+        return getAnnotation(clazz, ClassName.class)
+                .map(ClassName::value)
+                .filter(Objects::nonNull)
+                .filter(s -> !s.isEmpty())
+                .getOrElse(clazz.getSimpleName());
     }
 }
