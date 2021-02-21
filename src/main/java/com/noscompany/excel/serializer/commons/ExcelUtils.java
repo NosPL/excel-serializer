@@ -1,10 +1,12 @@
 package com.noscompany.excel.serializer.commons;
 
+import com.noscompany.excel.serializer.annotations.FieldName;
 import io.vavr.control.Option;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Objects;
 
 public class ExcelUtils {
 
@@ -44,5 +46,13 @@ public class ExcelUtils {
 
     public static boolean isCollection(Class clazz) {
         return Collection.class.isAssignableFrom(clazz);
+    }
+
+    public static String name(Field field) {
+        return getAnnotation(field, FieldName.class)
+                .map(FieldName::Value)
+                .filter(Objects::nonNull)
+                .filter(s -> !s.isEmpty())
+                .getOrElse(field.getName());
     }
 }

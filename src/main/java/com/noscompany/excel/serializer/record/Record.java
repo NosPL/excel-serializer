@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer.sheet.entry.element.record;
+package com.noscompany.excel.serializer.record;
 
 import com.noscompany.excel.serializer.commons.CellAddress;
 import com.noscompany.excel.serializer.commons.CellEntry;

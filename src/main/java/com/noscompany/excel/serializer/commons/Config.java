@@ -12,19 +12,12 @@ import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.*;
 @Getter
 public class Config {
     private File file;
-
     private boolean labels = true;
-
-    private boolean omitEmptyObjects = false;
-
     private CellAddress startingPosition = new CellAddress(0, 0);
-
     private int sheetEntryPadding = 1;
     private int sheetEntryOffset = 1;
     private int entryElementOffset = 1;
-
     private SheetEntryLayout sheetLayout = TOP_TO_BOTTOM;
-
     private short labelColor = LIGHT_ORANGE.getIndex();
     private short recordNamesColor = LIME.getIndex();
     private short recordValuesColor = LIGHT_YELLOW.getIndex();
@@ -44,11 +37,6 @@ public class Config {
 
         public Builder labels(boolean value) {
             config.labels = value;
-            return this;
-        }
-
-        public Builder omitEmptyObjects(boolean value) {
-            config.omitEmptyObjects = value;
             return this;
         }
 

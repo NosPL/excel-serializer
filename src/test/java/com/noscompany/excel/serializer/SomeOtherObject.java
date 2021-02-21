@@ -1,7 +1,7 @@
 package com.noscompany.excel.serializer;
 
-import com.noscompany.excel.serializer.annotations.ExcelObject;
-import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
+import com.noscompany.excel.serializer.annotations.ClassName;
+import com.noscompany.excel.serializer.annotations.FieldName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -9,13 +9,13 @@ import java.util.Random;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ExcelObject(label = "JAKIś inny OBIEKT")
+@ClassName(value = "JAKIś inny OBIEKT")
 public class SomeOtherObject {
-    @ExcelSimpleField(label = "jakieś pole 1")
+    @FieldName(Value = "jakieś pole 1")
     Integer someProperty1 = 312983;
     Integer someProperty2 = 82392;
     Integer someProperty3 = 0;
-    @ExcelSimpleField(label = "jakieś pole 4")
+    @FieldName(Value = "jakieś pole 4")
     Integer someProperty4 = 1;
 
     public static SomeOtherObject sample() {

@@ -1,10 +1,10 @@
-package com.noscompany.excel.serializer.sheet.entry.element;
+package com.noscompany.excel.serializer.entry.element;
 
 import com.noscompany.excel.serializer.commons.CellAddress;
 import com.noscompany.excel.serializer.commons.CellEntry;
 import com.noscompany.excel.serializer.commons.Config.RecordLayout;
 import com.noscompany.excel.serializer.commons.cursor.Cursor;
-import com.noscompany.excel.serializer.sheet.entry.element.record.Record;
+import com.noscompany.excel.serializer.record.Record;
 import io.vavr.control.Option;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

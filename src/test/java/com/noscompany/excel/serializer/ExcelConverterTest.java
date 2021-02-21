@@ -3,7 +3,7 @@ package com.noscompany.excel.serializer;
 import java.io.File;
 import java.util.List;
 
-import static com.noscompany.excel.serializer.commons.Config.SheetEntryLayout.TOP_TO_BOTTOM;
+import static com.noscompany.excel.serializer.commons.Config.SheetEntryLayout.LEFT_TO_RIGHT;
 import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.*;
 
 public class ExcelConverterTest {
@@ -13,9 +13,8 @@ public class ExcelConverterTest {
         ExcelSerializer
                 .instance(new File("C:\\folder\\Employees.xls"))
                 .labels(true)
-                .omitEmptyObjects(false)
                 .startingPosition(1, 1)
-                .sheetLayout(TOP_TO_BOTTOM)
+                .sheetLayout(LEFT_TO_RIGHT)
                 .sheetEntryOffset(1)
                 .sheetEntryPadding(1)
                 .entryElementOffset(1)

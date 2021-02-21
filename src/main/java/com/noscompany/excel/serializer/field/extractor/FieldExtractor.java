@@ -1,6 +1,5 @@
-package com.noscompany.excel.serializer.sheet.entry.element.extractor;
+package com.noscompany.excel.serializer.field.extractor;
 
-import java.util.Collection;
 import java.util.List;
 
 public class FieldExtractor {
@@ -14,8 +13,8 @@ public class FieldExtractor {
         collectionFieldExtractor = new CollectionFieldExtractor();
     }
 
-    public List<SimpleField> simpleFields(Collection<?> collection) {
-        return simpleFieldExtractor.extract(collection);
+    public List<SimpleField> simpleFields(Object object) {
+        return simpleFieldExtractor.extract(object);
     }
 
     public List<ComplexField> complexFields(Object object) {

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ExcelSimpleField {
-    String label() default "";
+@Target(ElementType.TYPE)
+public @interface ClassName {
+    String value() default "";
 }

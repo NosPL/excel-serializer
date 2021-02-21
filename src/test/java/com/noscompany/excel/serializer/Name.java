@@ -1,14 +1,14 @@
 package com.noscompany.excel.serializer;
 
-import com.noscompany.excel.serializer.annotations.ExcelObject;
-import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
+import com.noscompany.excel.serializer.annotations.ClassName;
+import com.noscompany.excel.serializer.annotations.FieldName;
 import lombok.Value;
 
 @Value
-@ExcelObject(label = "IMIĘ I NAZWISKO")
+@ClassName(value = "IMIĘ I NAZWISKO")
 public class Name {
-    @ExcelSimpleField(label = "IMIĘ")
+    @FieldName(Value = "IMIĘ")
     String firstName;
-    @ExcelSimpleField(label = "NAZWISKO")
+    @FieldName(Value = "NAZWISKO")
     String lastName;
 }

@@ -1,34 +1,34 @@
 package com.noscompany.excel.serializer;
 
-import com.noscompany.excel.serializer.annotations.ExcelObject;
-import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
+import com.noscompany.excel.serializer.annotations.ClassName;
+import com.noscompany.excel.serializer.annotations.FieldName;
 import lombok.Value;
 
 import java.util.List;
 
 @Value
-@ExcelObject(label = "PRACOWNIK")
+@ClassName(value = "PRACOWNIK")
 public class Employee {
-    @ExcelSimpleField(label = "JAKIŚ OBIEKT")
+    @FieldName(Value = "JAKIŚ OBIEKT")
     SomeObject someObject;
-    @ExcelSimpleField(label = "JAKIŚ OBIEKT")
+    @FieldName(Value = "JAKIŚ OBIEKT")
     SomeOtherObject someOtherObject;
-    @ExcelSimpleField(label = "IMIĘ")
+    @FieldName(Value = "IMIĘ")
     String firstName;
-    @ExcelSimpleField(label = "NAZWISKO")
+    @FieldName(Value = "NAZWISKO")
     String lastName;
-    @ExcelSimpleField(label = "PESEL")
+    @FieldName(Value = "PESEL")
     String PID;
-    @ExcelSimpleField(label = "DATA URODZENIA")
+    @FieldName(Value = "DATA URODZENIA")
     String BirthDate;
-    @ExcelSimpleField(label = "WIEK")
+    @FieldName(Value = "WIEK")
     int age;
-    @ExcelSimpleField(label = "OBYWATELSTWO")
+    @FieldName(Value = "OBYWATELSTWO")
     String nationality;
-    @ExcelSimpleField(label = "ADRESY")
+    @FieldName(Value = "ADRESY")
     List<Address> addresses;
-    @ExcelSimpleField(label = "NUMERY TEL")
+    @FieldName(Value = "NUMERY TEL")
     List<Phone> phones;
-    @ExcelSimpleField(label = "ALIASY")
+    @FieldName(Value = "ALIASY")
     List<String> aliases;
 }

@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer.sheet.entry.element.extractor;
+package com.noscompany.excel.serializer.field.extractor;
 
 import lombok.Value;
 

@@ -1,10 +1,13 @@
-package com.noscompany.excel.serializer.sheet.entry.element;
+package com.noscompany.excel.serializer.entry.element;
 
-import com.noscompany.excel.serializer.annotations.ExcelObject;
+import com.noscompany.excel.serializer.annotations.ClassName;
 import com.noscompany.excel.serializer.commons.Config;
-import com.noscompany.excel.serializer.sheet.entry.element.extractor.*;
-import com.noscompany.excel.serializer.sheet.entry.element.record.Record;
-import com.noscompany.excel.serializer.sheet.entry.element.record.RecordCreator;
+import com.noscompany.excel.serializer.entry.element.EntryElement.Label;
+import com.noscompany.excel.serializer.field.extractor.CollectionField;
+import com.noscompany.excel.serializer.field.extractor.ComplexField;
+import com.noscompany.excel.serializer.field.extractor.FieldExtractor;
+import com.noscompany.excel.serializer.record.Record;
+import com.noscompany.excel.serializer.record.RecordCreator;
 import io.vavr.control.Option;
 
 import java.util.LinkedList;
@@ -20,7 +23,7 @@ public class EntryElementCreator {
 
     public EntryElementCreator(Config config) {
         this.config = config;
-        recordCreator = new RecordCreator();
+        recordCreator = new RecordCreator(config);
         fieldExtractor = new FieldExtractor();
     }
 
@@ -32,14 +35,14 @@ public class EntryElementCreator {
     }
 
     private EntryElement entryFrom(Object object) {
-        Option<EntryElement.Label> label = config.isLabels() ? Option.of(objectLabel(object)) : Option.none();
+        Option<Label> label = config.isLabels() ? Option.of(objectLabel(object)) : Option.none();
         return getSingleValueEntryElement(object, label);
     }
 
     private List<EntryElement> entries(List<ComplexField> complexFields) {
         List<EntryElement> result = new LinkedList<>();
         for (ComplexField c : complexFields) {
-            Option<EntryElement.Label> label = config.isLabels() ? Option.of(new EntryElement.Label(c.getLabel(), config.getLabelColor())) : Option.none();
+            Option<Label> label = config.isLabels() ? Option.of(new Label(c.getLabel(), config.getLabelColor())) : Option.none();
             result.add(getSingleValueEntryElement(c.getObject(), label));
         }
         return result;
@@ -48,10 +51,8 @@ public class EntryElementCreator {
     private List<EntryElement> entriesFrom(List<CollectionField> collectionFields) {
         List<EntryElement> result = new LinkedList<>();
         for (CollectionField cf : collectionFields) {
-            Option<EntryElement.Label> label = config.isLabels() ? Option.of(label(cf)) : Option.none();
-            Short fieldNamesValues = config.getRecordNamesColor();
-            Short fieldValuesColor = config.getRecordValuesColor();
-            List<Record> records = recordCreator.create(cf.getCollection(), fieldNamesValues, fieldValuesColor);
+            Option<Label> label = config.isLabels() ? Option.of(label(cf)) : Option.none();
+            List<Record> records = recordCreator.create(cf.getCollection());
             result.add((new EntryElement(label, records)));
         }
         return result;
@@ -62,28 +63,25 @@ public class EntryElementCreator {
     }
 
     private List<CollectionField> collectionFieldsInside(Object object) {
-        List<CollectionField> collectionFields = fieldExtractor.collectionFields(object);
-        return collectionFields;
+        return fieldExtractor.collectionFields(object);
     }
 
-    private EntryElement getSingleValueEntryElement(Object object, Option<EntryElement.Label> label) {
-        Short fieldNamesColor = config.getRecordNamesColor();
-        Short fieldValuesColor = config.getRecordValuesColor();
+    private EntryElement getSingleValueEntryElement(Object object, Option<Label> label) {
         List<Object> arg = object == null ? List.of() : List.of(object);
-        List<Record> records = recordCreator.create(arg, fieldNamesColor, fieldValuesColor);
+        List<Record> records = recordCreator.create(arg);
         return new EntryElement(label, records);
     }
 
-    private EntryElement.Label label(CollectionField cf) {
-        return new EntryElement.Label(cf.getName(), config.getLabelColor());
+    private Label label(CollectionField cf) {
+        return new Label(cf.getName(), config.getLabelColor());
     }
 
-    private EntryElement.Label objectLabel(Object object) {
-        String labelValue = getAnnotation(object.getClass(), ExcelObject.class)
-                .map(ExcelObject::label)
+    private Label objectLabel(Object object) {
+        String labelValue = getAnnotation(object.getClass(), ClassName.class)
+                .map(ClassName::value)
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
                 .getOrElse(object.getClass().getSimpleName());
-        return new EntryElement.Label(labelValue, config.getLabelColor());
+        return new Label(labelValue, config.getLabelColor());
     }
 }
