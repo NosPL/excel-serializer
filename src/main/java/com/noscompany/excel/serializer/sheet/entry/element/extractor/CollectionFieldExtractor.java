@@ -1,6 +1,6 @@
 package com.noscompany.excel.serializer.sheet.entry.element.extractor;
 
-import com.noscompany.excel.serializer.annotations.ExcelCollection;
+import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
 import io.vavr.collection.Vector;
 import lombok.SneakyThrows;
 
@@ -32,8 +32,8 @@ class CollectionFieldExtractor {
     }
 
     private String fieldName(Field f) {
-        return getAnnotation(f, ExcelCollection.class)
-                .map(ExcelCollection::label)
+        return getAnnotation(f, ExcelSimpleField.class)
+                .map(ExcelSimpleField::label)
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
                 .getOrElse(f.getName());

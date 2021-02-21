@@ -1,6 +1,6 @@
 package com.noscompany.excel.serializer.sheet.entry.element.extractor;
 
-import com.noscompany.excel.serializer.annotations.ExcelEmbedded;
+import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
 import com.noscompany.excel.serializer.commons.ExcelUtils;
 import io.vavr.collection.Vector;
 import lombok.SneakyThrows;
@@ -23,7 +23,7 @@ class ComplexFieldExtractor {
     }
 
     private boolean isComplex(Field field) {
-        return ExcelUtils.isComplex(field.getType()) && getAnnotation(field, ExcelEmbedded.class).isDefined();
+        return ExcelUtils.isComplex(field.getType());
     }
 
     @SneakyThrows
@@ -34,8 +34,8 @@ class ComplexFieldExtractor {
     }
 
     private String getLabel(Field field) {
-        return getAnnotation(field, ExcelEmbedded.class)
-                .map(ExcelEmbedded::label)
+        return getAnnotation(field, ExcelSimpleField.class)
+                .map(ExcelSimpleField::label)
                 .getOrElse(field.getName());
     }
 }

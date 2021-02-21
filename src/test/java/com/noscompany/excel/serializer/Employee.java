@@ -1,9 +1,7 @@
 package com.noscompany.excel.serializer;
 
-import com.noscompany.excel.serializer.annotations.ExcelCollection;
-import com.noscompany.excel.serializer.annotations.ExcelEmbedded;
-import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
 import com.noscompany.excel.serializer.annotations.ExcelObject;
+import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
 import lombok.Value;
 
 import java.util.List;
@@ -11,9 +9,9 @@ import java.util.List;
 @Value
 @ExcelObject(label = "PRACOWNIK")
 public class Employee {
-    @ExcelEmbedded(label = "JAKIŚ OBIEKT")
+    @ExcelSimpleField(label = "JAKIŚ OBIEKT")
     SomeObject someObject;
-    @ExcelEmbedded(label = "JAKIŚ OBIEKT")
+    @ExcelSimpleField(label = "JAKIŚ OBIEKT")
     SomeOtherObject someOtherObject;
     @ExcelSimpleField(label = "IMIĘ")
     String firstName;
@@ -27,10 +25,10 @@ public class Employee {
     int age;
     @ExcelSimpleField(label = "OBYWATELSTWO")
     String nationality;
-    @ExcelCollection(label = "ADRESY")
+    @ExcelSimpleField(label = "ADRESY")
     List<Address> addresses;
-    @ExcelCollection(label = "NUMERY TEL")
+    @ExcelSimpleField(label = "NUMERY TEL")
     List<Phone> phones;
-    @ExcelCollection(label = "ALIASY")
+    @ExcelSimpleField(label = "ALIASY")
     List<String> aliases;
 }

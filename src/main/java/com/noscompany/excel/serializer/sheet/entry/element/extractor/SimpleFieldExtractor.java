@@ -1,6 +1,7 @@
 package com.noscompany.excel.serializer.sheet.entry.element.extractor;
 
 import com.noscompany.excel.serializer.annotations.ExcelSimpleField;
+import com.noscompany.excel.serializer.commons.ExcelUtils;
 import io.vavr.collection.Vector;
 import lombok.AllArgsConstructor;
 
@@ -17,7 +18,7 @@ class SimpleFieldExtractor {
     List<SimpleField> extract(Collection<?> collection) {
         return Vector
                 .ofAll(fieldsFrom(collection))
-                .filter(this::isSimple)
+                .filter(f1 -> ExcelUtils.isSimple(f1.getType()))
                 .map(f -> new SimpleField(name(f), f))
                 .toJavaList();
     }
@@ -31,16 +32,6 @@ class SimpleFieldExtractor {
                     .filter(Objects::nonNull)
                     .map(Object::getClass)
                     .flatMap(clazz -> List.of(clazz.getDeclaredFields()));
-    }
-
-    private boolean isSimple(Field f) {
-        Class clazz = f.getType();
-        return clazz.isPrimitive() ||
-                clazz.isAssignableFrom(String.class) ||
-                clazz.isAssignableFrom(Long.class) ||
-                clazz.isAssignableFrom(Double.class) ||
-                clazz.isAssignableFrom(Integer.class) ||
-                clazz.isAssignableFrom(Boolean.class);
     }
 
     private String name(Field field) {
