@@ -10,6 +10,8 @@ import java.util.List;
 public class CellEntrySizeCalculating {
 
     public Size calculate(List<CellEntry> cellEntries) {
+        if (cellEntries.isEmpty())
+            return new Size(0, 0);
         int latestColumn = getColumns(cellEntries).sorted().last();
         int earliestColumn = getColumns(cellEntries).sorted().head();
         int latestRow = getRows(cellEntries).sorted().last();
