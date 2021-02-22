@@ -1,7 +1,10 @@
-package com.noscompany.excel.serializer;
+package com.noscompany.excel.serializer.sample.data;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 import static java.util.List.of;
@@ -12,14 +15,14 @@ public class SampleData {
 
     public static final Random random = new Random();
 
-    static List<Employee> randomEmployees(int count) {
+    public static List<Employee> randomEmployees(int count) {
         return IntStream
                 .rangeClosed(1, count)
-                .mapToObj(i -> random())
+                .mapToObj(i -> randomEmployee())
                 .collect(toList());
     }
 
-    public static Employee random() {
+    public static Employee randomEmployee() {
         return new Employee(
                 randomName(),
                 randomPID(),
@@ -31,13 +34,13 @@ public class SampleData {
         );
     }
 
-    private static Department randomDepartment() {
+    public static Department randomDepartment() {
         return new Department(
-                shuffle(new LinkedList<>(of("księgowość, ochrona", "produkcja"))).get(0),
+                shuffle(new LinkedList<>(of("księgowość", "ochrona", "produkcja"))).get(0),
                 randomUUID().toString().substring(0, 5));
     }
 
-    private static Name randomName() {
+    public static Name randomName() {
         return new Name(randomFirstName(), randomLastName());
     }
 

@@ -23,8 +23,4 @@ public class CellAddress {
     public CellAddress moveDown(int offset) {
         return new CellAddress(row + offset, column);
     }
-
-    public CellAddress move(int rowOffset, int columnOffset) {
-        return new CellAddress(row + rowOffset, column + columnOffset);
-    }
 }

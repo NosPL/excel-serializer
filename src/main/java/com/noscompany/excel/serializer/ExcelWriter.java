@@ -17,7 +17,7 @@ class ExcelWriter {
     private final Config config;
     private final Workbook workbook;
     private final Sheet sheet;
-    private CellStyles cellStyles;
+    private final CellStyles cellStyles;
 
     ExcelWriter(Config config) {
         this.config = config;
@@ -36,18 +36,18 @@ class ExcelWriter {
     private void setCell(CellEntry cellEntry) {
         int row = cellEntry.getCellAddress().getRow();
         int column = cellEntry.getCellAddress().getColumn();
-        CellStyle cellStyle = cellStyles.getCellStyle(cellEntry.getBackgroundColor());
+        CellStyle cellStyle = cellStyles.getCellStyleFor(cellEntry.getBackgroundColor());
         String cellValue = cellEntry.getCellValue();
         Cell cell = getRow(row).createCell(column);
         cell.setCellStyle(cellStyle);
         cell.setCellValue(cellValue);
     }
 
-    private <T> void paintEntryBackgroundCells(SheetEntry excelEntry) {
-        int startingRow = excelEntry.getStartingPoint().getRow();
-        int startingColumn = excelEntry.getStartingPoint().getColumn();
-        int width = excelEntry.getSize().getWidth();
-        int height = excelEntry.getSize().getHeight();
+    private <T> void paintEntryBackgroundCells(SheetEntry sheetEntry) {
+        int startingRow = sheetEntry.getStartingPoint().getRow();
+        int startingColumn = sheetEntry.getStartingPoint().getColumn();
+        int width = sheetEntry.getSize().getWidth();
+        int height = sheetEntry.getSize().getHeight();
         for (int row = startingRow; row < startingRow + height; row++) {
             for (int column = startingColumn; column < startingColumn + width; column++) {
                 Cell cell = getRow(row)
@@ -88,7 +88,7 @@ class ExcelWriter {
             this.backgroundCellStyle = backgroundStyle;
         }
 
-        CellStyle getCellStyle(Short color) {
+        CellStyle getCellStyleFor(Short color) {
             return cellStyles
                     .stream()
                     .filter(cellStyle -> cellStyle.getFillForegroundColor() == color)

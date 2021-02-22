@@ -8,27 +8,27 @@ import lombok.SneakyThrows;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.noscompany.excel.serializer.commons.ExcelUtils.name;
+import static com.noscompany.excel.serializer.commons.ExcelUtils.fieldsFrom;
+import static com.noscompany.excel.serializer.commons.ExcelUtils.nameOf;
+import static io.vavr.collection.Vector.ofAll;
 
 
 class ComplexFieldExtractor {
 
     List<ComplexField> extract(Object object) {
-        Field[] fields = object.getClass().getDeclaredFields();
-        return Vector
-                .of(fields)
-                .filter(this::isComplex)
+        return ofAll(fieldsFrom(object))
+                .filter(this::isComplexAndNotInlined)
                 .map(field -> complexField(field, object))
                 .toJavaList();
     }
 
-    private boolean isComplex(Field field) {
+    private boolean isComplexAndNotInlined(Field field) {
         return ExcelUtils.isComplex(field.getType()) && !field.isAnnotationPresent(Inline.class);
     }
 
     @SneakyThrows
     private ComplexField complexField(Field field, Object object) {
         field.setAccessible(true);
-        return new ComplexField(name(field), field.get(object));
+        return new ComplexField(nameOf(field), field.get(object));
     }
 }

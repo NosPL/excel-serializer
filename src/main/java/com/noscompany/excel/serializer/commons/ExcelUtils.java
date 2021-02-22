@@ -33,31 +33,38 @@ public class ExcelUtils {
             return Option.none();
     }
 
-    public static boolean isComplex(Class clazz) {
+    public static boolean isComplex(Class<?> clazz) {
         return !isSimple(clazz) && !isCollection(clazz);
     }
 
-    public static boolean isSimple(Class clazz) {
-        return clazz.isPrimitive() ||
-                clazz.isAssignableFrom(String.class) ||
+    public static boolean isSimple(Class<?> clazz) {
+        return clazz.isPrimitive() || isPrimitiveWrapper(clazz);
+    }
+
+    public static boolean isSimple(Field field) {
+        return isSimple(field.getType());
+    }
+
+    private static boolean isPrimitiveWrapper(Class<?> clazz) {
+        return clazz.isAssignableFrom(String.class) ||
                 clazz.isAssignableFrom(Long.class) ||
                 clazz.isAssignableFrom(Double.class) ||
                 clazz.isAssignableFrom(Integer.class) ||
-                clazz.isAssignableFrom(Boolean.class);
+                clazz.isAssignableFrom(Boolean.class) ||
+                clazz.isAssignableFrom(Short.class) ||
+                clazz.isAssignableFrom(Byte.class) ||
+                clazz.isAssignableFrom(Character.class);
     }
 
-    public static boolean objectsInsideAreSimple(Collection<?> collection) {
-        if (collection.isEmpty())
-            return false;
-        Object next = collection.iterator().next();
-        return isSimple(next.getClass());
+    public static boolean isCollection(Field field) {
+        return isCollection(field.getType());
     }
 
-    public static boolean isCollection(Class clazz) {
+    public static boolean isCollection(Class<?> clazz) {
         return Collection.class.isAssignableFrom(clazz);
     }
 
-    public static String name(Field field) {
+    public static String nameOf(Field field) {
         return getAnnotation(field, FieldName.class)
                 .map(FieldName::Value)
                 .filter(Objects::nonNull)
@@ -65,7 +72,7 @@ public class ExcelUtils {
                 .getOrElse(field.getName());
     }
 
-    public static String name(Class<?> clazz) {
+    public static String nameOf(Class<?> clazz) {
         return getAnnotation(clazz, ClassName.class)
                 .map(ClassName::value)
                 .filter(Objects::nonNull)

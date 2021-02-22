@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer;
+package com.noscompany.excel.serializer.sample.data;
 
 import lombok.Value;
 

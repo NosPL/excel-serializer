@@ -7,5 +7,5 @@ import java.util.Collection;
 @Value
 public class CollectionField {
     String name;
-    Collection collection;
+    Collection<?> collection;
 }
