@@ -40,7 +40,7 @@ class PositioningOfNONCollectionField {
     }
 
     private Cursor cursor(CellAddress startingPosition) {
-        return Cursor.vertical(startingPosition, config.getSheetEntryOffset());
+        return Cursor.vertical(startingPosition, config.getEntryElementOffset());
     }
 
     private List<EntryElement> entryElements(EntryElementList entryElementList) {
