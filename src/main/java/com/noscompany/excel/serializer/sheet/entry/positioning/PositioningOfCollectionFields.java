@@ -25,7 +25,7 @@ class PositioningOfCollectionFields {
     List<CellEntry> draw(EntryElementList entryElementList, CellAddress startingPosition) {
         List<CellEntry> result = new LinkedList<>();
         Cursor cursor = cursor(startingPosition);
-        entryElementList.getCollectionEntryElements()
+        entryElementList.getFromCollectionFields()
                 .forEach(e -> {
                     List<CellEntry> cellEntries = e.draw(cursor.position(), VERTICAL);
                     result.addAll(cellEntries);

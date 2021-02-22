@@ -1,6 +1,7 @@
 package com.noscompany.excel.serializer;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -11,32 +12,55 @@ import static java.util.stream.Collectors.toList;
 
 public class SampleData {
 
-    private static final Random random = new Random();
+    public static final Random random = new Random();
 
-    static List<Employee> sampleEmployees(int count) {
+    static List<Employee> randomEmployees(int count) {
         return IntStream
                 .rangeClosed(1, count)
-                .mapToObj(i -> sampleEmployee())
+                .mapToObj(i -> random())
                 .collect(toList());
     }
 
-    public static Employee sampleEmployee() {
+    public static Employee random() {
         return new Employee(
                 SomeObject.sample(),
                 SomeOtherObject.sample(),
-                "Jan",
-                "Kowalski",
-                null,
-                LocalDate.of(1990, 10, 5).toString(),
-                30,
-                "PL",
+                randomFirstName(),
+                randomLastName(),
+                randomPID(),
+                randomBirthDate(),
+                randomNationality(),
                 randomNumberOf(sampleAddresses()),
                 randomNumberOf(samplePhones()),
                 randomNumberOf(sampleAliases())
         );
     }
 
-    private static List<String> sampleAliases() {
+    public static String randomFirstName() {
+        return shuffle(new LinkedList<>(of("Jan", "Krzysztof", "Pawel"))).get(0);
+    }
+
+    public static String randomLastName() {
+        return shuffle(new LinkedList<>(of("Marecki", "Kowalski", "Nowak"))).get(0);
+    }
+
+    public static String randomPID() {
+        return shuffle(new LinkedList<>(of("11111111111", "22222222222", "33333333333"))).get(0);
+    }
+
+    public static String randomBirthDate() {
+        return shuffle(new LinkedList<>(of(
+                LocalDate.of(1980, 1, 1).toString(),
+                LocalDate.of(1990, 5, 20).toString(),
+                LocalDate.of(2000, 10, 30).toString()
+        ))).get(0);
+    }
+
+    public static String randomNationality() {
+        return shuffle(new LinkedList<>(of("PL", "EN", "DE"))).get(0);
+    }
+
+    public static List<String> sampleAliases() {
         List<String> aliases = new LinkedList<>(of(
                 "1 alias", "2 alias", "3 alias", "4 alias", "5 alias",
                 "6 alias", "7 alias", "8 alias", "9 alias", "10 alias",
@@ -125,5 +149,10 @@ public class SampleData {
         if (i == list.size() - 1)
             return null;
         return list.stream().limit(i).collect(toList());
+    }
+
+    public static <T> List<T> shuffle(List<T> list) {
+        Collections.shuffle(list);
+        return list;
     }
 }

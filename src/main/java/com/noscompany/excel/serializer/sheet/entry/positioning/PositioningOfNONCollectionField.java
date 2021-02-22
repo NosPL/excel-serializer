@@ -45,7 +45,7 @@ class PositioningOfNONCollectionField {
 
     private List<EntryElement> entryElements(EntryElementList entryElementList) {
         EntryElement mainObjectEntry = entryElementList.getMainObjectEntry();
-        List<EntryElement> singleValueEntryElements = entryElementList.getSingleValueEntryElements();
+        List<EntryElement> singleValueEntryElements = entryElementList.getFromComplexFields();
         singleValueEntryElements.add(0, mainObjectEntry);
         return singleValueEntryElements;
     }

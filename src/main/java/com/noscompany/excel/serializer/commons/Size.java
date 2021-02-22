@@ -15,7 +15,4 @@ public class Size {
         return new Size(this.width, this.height + height);
     }
 
-    public int squareArea() {
-        return width * height;
-    }
 }

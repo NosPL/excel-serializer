@@ -20,14 +20,14 @@ public class Record {
     public List<CellEntry> draw(CellAddress position, RecordLayout recordLayout) {
         Cursor cursor = Cursor.cursor(position, recordLayout);
         List<CellEntry> result = new LinkedList<>();
-        if (name.isDefined()) {
-            result.add(new CellEntry(cursor.position(), name.get(), nameColor));
+        name.peek(name -> {
+            result.add(new CellEntry(cursor.position(), name, nameColor));
             cursor.move();
-        }
-        for (String value : values) {
+        });
+        values.forEach(value -> {
             result.add(new CellEntry(cursor.position(), value, valueColor));
             cursor.move();
-        }
+        });
         return result;
     }
 

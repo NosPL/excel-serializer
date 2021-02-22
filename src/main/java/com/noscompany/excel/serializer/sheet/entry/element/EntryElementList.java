@@ -8,21 +8,6 @@ import java.util.List;
 @Value
 public class EntryElementList {
     EntryElement mainObjectEntry;
-    List<EntryElement> singleValueEntryElements;
-    List<EntryElement> collectionEntryElements;
-
-    public EntryElementList addEntriesFromComplexFields(List<EntryElement> entryElements) {
-        this.singleValueEntryElements.addAll(entryElements);
-        return this;
-    }
-
-    public EntryElementList addEntriesFromCollectionFields(List<EntryElement> entryElements) {
-        this.collectionEntryElements.addAll(entryElements);
-        return this;
-    }
-
-    public static EntryElementList fromMainObject(EntryElement mainObjectEntry) {
-        return new EntryElementList(mainObjectEntry, new LinkedList<>(), new LinkedList<>());
-    }
-
+    List<EntryElement> fromComplexFields;
+    List<EntryElement> fromCollectionFields;
 }

@@ -21,8 +21,6 @@ public class Employee {
     String PID;
     @FieldName(Value = "DATA URODZENIA")
     String BirthDate;
-    @FieldName(Value = "WIEK")
-    int age;
     @FieldName(Value = "OBYWATELSTWO")
     String nationality;
     @FieldName(Value = "ADRESY")

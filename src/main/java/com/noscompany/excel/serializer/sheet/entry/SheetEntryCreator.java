@@ -15,19 +15,19 @@ public class SheetEntryCreator {
     private final Config config;
     private final EntryElementCreator entryElementCreator;
     private final CellEntrySizeCalculating cellEntrySizeCalculating;
-    private final PositioningEntryElementsOnSheetEntry positioningEntryElementsOnSheetEntry;
+    private final PositioningEntryElementsOnSheetEntry drawingEntryElementsOnSheet;
 
     public SheetEntryCreator(Config config) {
         this.config = config;
         this.entryElementCreator = new EntryElementCreator(config);
         this.cellEntrySizeCalculating = new CellEntrySizeCalculating();
-        this.positioningEntryElementsOnSheetEntry = new PositioningEntryElementsOnSheetEntry(config);
+        this.drawingEntryElementsOnSheet = new PositioningEntryElementsOnSheetEntry(config);
     }
 
     @SneakyThrows
     public SheetEntry create(Object object, CellAddress startingPosition) {
         EntryElementList entryElements = entryElementCreator.create(object);
-        List<CellEntry> cellEntries = positioningEntryElementsOnSheetEntry.position(entryElements, startingPosition);
+        List<CellEntry> cellEntries = drawingEntryElementsOnSheet.draw(entryElements, startingPosition);
         Size size = withPadding(size(cellEntries));
         return new SheetEntry(size, cellEntries, startingPosition);
     }
@@ -39,7 +39,6 @@ public class SheetEntryCreator {
     }
 
     private Size size(List<CellEntry> cellEntries) {
-        Size result = cellEntrySizeCalculating.calculate(cellEntries);
-        return result;
+        return cellEntrySizeCalculating.calculate(cellEntries);
     }
 }

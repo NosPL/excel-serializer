@@ -5,10 +5,10 @@ import com.noscompany.excel.serializer.field.extractor.FieldExtractor;
 import com.noscompany.excel.serializer.field.extractor.SimpleField;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 import static com.noscompany.excel.serializer.commons.ExcelUtils.objectsInsideAreSimple;
+import static com.noscompany.excel.serializer.sheet.entry.element.record.Record.record;
 import static java.util.stream.Collectors.toList;
 
 public class RecordCreator {
@@ -29,15 +29,26 @@ public class RecordCreator {
 
     private List<Record> fromSimple(Collection<?> collection) {
         List<String> values = getValues(collection);
-        return List.of(Record.record(values, nameColor(), valuesColor()));
+        return List.of(record(values, nameColor(), valuesColor()));
     }
 
-    private short valuesColor() {
-        return config.getRecordValuesColor();
+    private List<Record> fromComplexCollection(Collection<?> collection) {
+        return simpleFieldsFromObjectsInside(collection)
+                .stream()
+                .map(sf -> createRecord(collection, sf))
+                .collect(toList());
     }
 
-    private short nameColor() {
-        return config.getRecordNamesColor();
+    private Record createRecord(Collection<?> collection, SimpleField sf) {
+        List<String> values = collection.stream().map(sf::getValue).collect(toList());
+        return record(sf.getName(), values, nameColor(), valuesColor());
+    }
+
+    private List<SimpleField> simpleFieldsFromObjectsInside(Collection<?> collection) {
+        if (collection.isEmpty())
+            return List.of();
+        Object object = collection.iterator().next();
+        return fieldExtractor.simpleFields(object);
     }
 
     private List<String> getValues(Collection<?> collection) {
@@ -47,16 +58,11 @@ public class RecordCreator {
                 .collect(toList());
     }
 
-    private List<Record> fromComplexCollection(Collection<?> collection) {
-        if (collection.isEmpty())
-            return List.of();
-        Object object = collection.iterator().next();
-        List<SimpleField> simpleFields = fieldExtractor.simpleFields(object);
-        List<Record> result = new LinkedList<>();
-        for (SimpleField sf : simpleFields) {
-            List<String> values = collection.stream().map(sf::getValue).collect(toList());
-            result.add(Record.record(sf.getName(), values, nameColor(), valuesColor()));
-        }
-        return result;
+    private short nameColor() {
+        return config.getRecordNamesColor();
+    }
+
+    private short valuesColor() {
+        return config.getRecordValuesColor();
     }
 }

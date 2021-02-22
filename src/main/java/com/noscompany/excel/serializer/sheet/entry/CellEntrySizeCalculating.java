@@ -10,13 +10,21 @@ import java.util.List;
 public class CellEntrySizeCalculating {
 
     public Size calculate(List<CellEntry> cellEntries) {
-        int latestColumn = getCellAddresses(cellEntries).map(CellAddress::getColumn).sorted().last();
-        int earliestColumn = getCellAddresses(cellEntries).map(CellAddress::getColumn).sorted().reverse().last();
-        int latestRow = getCellAddresses(cellEntries).map(CellAddress::getRow).sorted().last();
-        int earliestRow = getCellAddresses(cellEntries).map(CellAddress::getRow).sorted().reverse().last();
+        int latestColumn = getColumns(cellEntries).sorted().last();
+        int earliestColumn = getColumns(cellEntries).sorted().head();
+        int latestRow = getRows(cellEntries).sorted().last();
+        int earliestRow = getRows(cellEntries).sorted().head();
         int width = latestColumn - earliestColumn + 1;
         int height = latestRow - earliestRow + 1;
         return new Size(width, height);
+    }
+
+    private Vector<Integer> getRows(List<CellEntry> cellEntries) {
+        return getCellAddresses(cellEntries).map(CellAddress::getRow);
+    }
+
+    private Vector<Integer> getColumns(List<CellEntry> cellEntries) {
+        return getCellAddresses(cellEntries).map(CellAddress::getColumn);
     }
 
     private Vector<CellAddress> getCellAddresses(List<CellEntry> entryElements) {
