@@ -6,10 +6,18 @@ import io.vavr.control.Option;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class ExcelUtils {
+    public static List<Field> fieldsFrom(Object object) {
+        if (object == null)
+            return List.of();
+        else
+            return Arrays.asList(object.getClass().getDeclaredFields());
+    }
 
     public static <T extends Annotation> Option<T> getAnnotation(Class<?> clazz, Class<T> annotation) {
         if (clazz.isAnnotationPresent(annotation))

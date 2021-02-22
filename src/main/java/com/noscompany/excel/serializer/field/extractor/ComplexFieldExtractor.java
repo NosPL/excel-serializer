@@ -1,5 +1,6 @@
 package com.noscompany.excel.serializer.field.extractor;
 
+import com.noscompany.excel.serializer.annotations.Inline;
 import com.noscompany.excel.serializer.commons.ExcelUtils;
 import io.vavr.collection.Vector;
 import lombok.SneakyThrows;
@@ -7,7 +8,6 @@ import lombok.SneakyThrows;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.noscompany.excel.serializer.commons.ExcelUtils.getAnnotation;
 import static com.noscompany.excel.serializer.commons.ExcelUtils.name;
 
 
@@ -23,7 +23,7 @@ class ComplexFieldExtractor {
     }
 
     private boolean isComplex(Field field) {
-        return ExcelUtils.isComplex(field.getType());
+        return ExcelUtils.isComplex(field.getType()) && !field.isAnnotationPresent(Inline.class);
     }
 
     @SneakyThrows

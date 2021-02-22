@@ -2,6 +2,7 @@ package com.noscompany.excel.serializer;
 
 import com.noscompany.excel.serializer.annotations.ClassName;
 import com.noscompany.excel.serializer.annotations.FieldName;
+import com.noscompany.excel.serializer.annotations.Inline;
 import lombok.Value;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @ClassName(value = "PRACOWNIK")
 public class Employee {
     @FieldName(Value = "JAKIŚ OBIEKT")
+    @Inline
     SomeObject someObject;
     @FieldName(Value = "JAKIŚ OBIEKT")
     SomeOtherObject someOtherObject;
