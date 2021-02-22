@@ -10,21 +10,14 @@ import java.util.List;
 @Value
 @ClassName(value = "PRACOWNIK")
 public class Employee {
-    @FieldName(Value = "JAKIŚ OBIEKT")
     @Inline
-    SomeObject someObject;
-    @FieldName(Value = "JAKIŚ OBIEKT")
-    SomeOtherObject someOtherObject;
-    @FieldName(Value = "IMIĘ")
-    String firstName;
-    @FieldName(Value = "NAZWISKO")
-    String lastName;
+    Name name;
     @FieldName(Value = "PESEL")
     String PID;
     @FieldName(Value = "DATA URODZENIA")
     String BirthDate;
-    @FieldName(Value = "OBYWATELSTWO")
-    String nationality;
+    @FieldName(Value = "STANOWISKO")
+    Department department;
     @FieldName(Value = "ADRESY")
     List<Address> addresses;
     @FieldName(Value = "NUMERY TEL")

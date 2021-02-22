@@ -1,13 +1,11 @@
 package com.noscompany.excel.serializer;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.List.of;
+import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.toList;
 
 public class SampleData {
@@ -23,17 +21,24 @@ public class SampleData {
 
     public static Employee random() {
         return new Employee(
-                SomeObject.sample(),
-                SomeOtherObject.sample(),
-                randomFirstName(),
-                randomLastName(),
+                randomName(),
                 randomPID(),
                 randomBirthDate(),
-                randomNationality(),
+                randomDepartment(),
                 randomNumberOf(sampleAddresses()),
                 randomNumberOf(samplePhones()),
                 randomNumberOf(sampleAliases())
         );
+    }
+
+    private static Department randomDepartment() {
+        return new Department(
+                shuffle(new LinkedList<>(of("księgowość, ochrona", "produkcja"))).get(0),
+                randomUUID().toString().substring(0, 5));
+    }
+
+    private static Name randomName() {
+        return new Name(randomFirstName(), randomLastName());
     }
 
     public static String randomFirstName() {
