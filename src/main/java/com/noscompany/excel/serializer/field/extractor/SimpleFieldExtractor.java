@@ -22,12 +22,16 @@ class SimpleFieldExtractor {
 
     @SneakyThrows
     private List<SimpleField> sampleFields(Field field, Object object) {
-        field.setAccessible(true);
-        if (isSimple(field.getType()))
-            return List.of(new SimpleField(name(field), field));
-        else if (field.isAnnotationPresent(Inline.class)) {
-            return extract(field.get(object));
-        } else
+        try {
+            field.setAccessible(true);
+            if (isSimple(field.getType()))
+                return List.of(new SimpleField(name(field), field.get(object).toString()));
+            else if (field.isAnnotationPresent(Inline.class)) {
+                return extract(field.get(object));
+            } else
+                return List.of();
+        } catch (Exception e) {
             return List.of();
+        }
     }
 }

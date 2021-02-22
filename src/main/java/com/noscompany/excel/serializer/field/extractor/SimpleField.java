@@ -1,24 +1,19 @@
 package com.noscompany.excel.serializer.field.extractor;
 
-
-import lombok.SneakyThrows;
-import lombok.Value;
-
-import java.lang.reflect.Field;
-
-@Value
 public class SimpleField {
-    String name;
-    Field field;
+    private final String name;
+    private final String value;
 
-    @SneakyThrows
-    public String getValue(Object object) {
-        field.setAccessible(true);
-        try {
-            return field.get(object).toString();
-        } catch (Exception e) {
-            return "";
-        }
+    public SimpleField(String name, String value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
-
