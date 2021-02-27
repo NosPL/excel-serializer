@@ -21,11 +21,12 @@ public class ExcelConverterTest {
                 .spacesBetweenSheetEntries(3)
                 .sheetEntryPadding(1)
                 .spacesBetweenTables(1)
-                .allowNestedCollections(true)
                 .tablesTitleColor(LIME.getIndex())
                 .recordLabelsColor(LIGHT_ORANGE.getIndex())
                 .recordsColor(LIGHT_YELLOW.getIndex())
                 .sheetEntryBackgroundColor(AQUA.getIndex())
+                .allowNestedCollections(true)
+                .indexedTableRecords(true)
                 .build();
         new ExcelSerializer(config)
                 .serialize(employees, file);

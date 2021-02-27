@@ -18,6 +18,7 @@ public class Config {
     private short recordValuesColor = LIGHT_YELLOW.getIndex();
     private short sheetEntryBackgroundColor = WHITE.getIndex();
     private boolean allowNestedCollections = true;
+    private boolean indexedTableRecords = false;
 
     public enum SheetLayout {
         VERTICAL, HORIZONTAL
@@ -53,11 +54,6 @@ public class Config {
             return this;
         }
 
-        public Builder allowNestedCollections(boolean value) {
-            config.allowNestedCollections = value;
-            return this;
-        }
-
         public Builder spacesBetweenTables(int value) {
             config.spacesBetweenTables = Math.max(0, value);
             return this;
@@ -85,6 +81,16 @@ public class Config {
 
         public Builder sheetEntryBackgroundColor(short value) {
             config.sheetEntryBackgroundColor = value;
+            return this;
+        }
+
+        public Builder allowNestedCollections(boolean value) {
+            config.allowNestedCollections = value;
+            return this;
+        }
+
+        public Builder indexedTableRecords(boolean value) {
+            config.indexedTableRecords = value;
             return this;
         }
 

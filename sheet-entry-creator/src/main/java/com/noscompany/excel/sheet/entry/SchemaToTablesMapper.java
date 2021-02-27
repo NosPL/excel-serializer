@@ -1,9 +1,9 @@
 package com.noscompany.excel.sheet.entry;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.TypeCollection;
 import com.noscompany.excel.sheet.entry.schema.ComplexType;
 import com.noscompany.excel.sheet.entry.schema.Schema;
+import com.noscompany.excel.sheet.entry.schema.TypeCollection;
 import com.noscompany.excel.sheet.entry.table.Table;
 import com.noscompany.excel.sheet.entry.table.Tables;
 import lombok.Value;
@@ -61,7 +61,12 @@ class SchemaToTablesMapper {
                 .title(titleColor(), typeCollection.getName())
                 .recordLabels(recordLabelsColor(), typeCollection.getFieldNames())
                 .records(recordColor(), typeCollection.getFieldValues())
+                .addRecordIndexes(addIndexes())
                 .create();
+    }
+
+    private boolean addIndexes() {
+        return config.isIndexedTableRecords();
     }
 
     private short recordColor() {

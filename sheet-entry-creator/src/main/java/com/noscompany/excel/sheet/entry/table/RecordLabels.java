@@ -5,8 +5,10 @@ import com.noscompany.excel.commons.CellEntry;
 
 import java.util.List;
 
-interface Record {
+interface RecordLabels {
     List<CellEntry> draw(CellAddress startingPosition, Table.Layout tableLayout);
 
     short getColor();
+
+    boolean isEmpty();
 }

@@ -124,7 +124,7 @@ public class SampleData {
 
     public static <T> List<T> randomNumberOf(List<T> list) {
         long i = random.nextInt(12);
-        return list.stream().limit(Math.max(2, i)).collect(toList());
+        return list.stream().limit(i).collect(toList());
     }
 
     public static <T> List<T> shuffle(List<T> list) {
