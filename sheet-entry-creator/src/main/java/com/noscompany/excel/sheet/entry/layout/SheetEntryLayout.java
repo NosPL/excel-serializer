@@ -4,8 +4,8 @@ import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.SurfaceSize;
+import com.noscompany.excel.commons.cursor.Cursor;
 import com.noscompany.excel.sheet.entry.CellEntriesUtils;
-import com.noscompany.excel.sheet.entry.cursor.Cursor;
 import com.noscompany.excel.sheet.entry.table.Table;
 import com.noscompany.excel.sheet.entry.table.Tables;
 

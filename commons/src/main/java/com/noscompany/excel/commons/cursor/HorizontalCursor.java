@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.cursor;
+package com.noscompany.excel.commons.cursor;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.SurfaceSize;

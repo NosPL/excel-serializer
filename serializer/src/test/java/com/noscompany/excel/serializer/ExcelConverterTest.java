@@ -14,12 +14,9 @@ public class ExcelConverterTest {
 
     public static void main(String[] args) {
         File file = new File("C:\\folder\\Employees.xlsx");
-<<<<<<< HEAD
-        List<Employee> employees = randomEmployees(100);
-=======
         List<Employee> employees = randomEmployees(1000);
->>>>>>> 1796f9f... improved naming in Config
-        Config config = Config.builder()
+        Config config = Config
+                .builder()
                 .startingPosition(4, 1)
                 .sheetLayout(VERTICAL)
                 .spacesBetweenSheetEntries(3)

@@ -2,7 +2,7 @@ package com.noscompany.excel.sheet.entry.table;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
-import com.noscompany.excel.sheet.entry.cursor.Cursor;
+import com.noscompany.excel.commons.cursor.Cursor;
 import lombok.Value;
 
 import java.awt.*;
