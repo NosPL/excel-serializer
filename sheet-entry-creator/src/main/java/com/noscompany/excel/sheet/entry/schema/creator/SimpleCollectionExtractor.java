@@ -1,6 +1,6 @@
 package com.noscompany.excel.sheet.entry.schema.creator;
 
-import com.noscompany.excel.sheet.entry.schema.TypeCollection;
+import com.noscompany.excel.sheet.entry.schema.ValueCollection;
 import io.vavr.control.Option;
 import lombok.SneakyThrows;
 
@@ -13,9 +13,9 @@ import static io.vavr.collection.Vector.ofAll;
 import static io.vavr.control.Option.none;
 import static java.util.stream.Collectors.toList;
 
-class SimpleTypeCollectionExtractor {
+class SimpleCollectionExtractor {
 
-    List<TypeCollection> extract(Object object) {
+    List<ValueCollection> extract(Object object) {
         return ofAll(fieldsFromObject(object))
                 .filter(SchemaUtils::isCollection)
                 .flatMap(f -> create(object, f))
@@ -23,7 +23,7 @@ class SimpleTypeCollectionExtractor {
     }
 
     @SneakyThrows
-    private Option<TypeCollection> create(Object object, Field field) {
+    private Option<ValueCollection> create(Object object, Field field) {
         field.setAccessible(true);
         Collection<?> collection = (Collection<?>) field.get(object);
         if (collection == null || collection.isEmpty())
@@ -32,7 +32,7 @@ class SimpleTypeCollectionExtractor {
         Object next = collection.iterator().next();
         if (isSimple(next.getClass())) {
             values = collection.stream().map(Object::toString).collect(toList());
-            return Option.of(new SimpleTypeCollection(nameOf(field), values));
+            return Option.of(new SimpleCollection(nameOf(field), values));
         } else {
             return Option.none();
         }

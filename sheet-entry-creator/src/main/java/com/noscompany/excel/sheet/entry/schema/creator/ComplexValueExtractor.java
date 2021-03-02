@@ -1,8 +1,8 @@
 package com.noscompany.excel.sheet.entry.schema.creator;
 
 import com.noscompany.excel.commons.annotations.Inline;
-import com.noscompany.excel.sheet.entry.schema.ComplexType;
-import com.noscompany.excel.sheet.entry.schema.SimpleType;
+import com.noscompany.excel.sheet.entry.schema.ComplexValue;
+import com.noscompany.excel.sheet.entry.schema.SimpleValue;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
@@ -13,10 +13,10 @@ import static com.noscompany.excel.sheet.entry.schema.creator.SchemaUtils.nameOf
 import static io.vavr.collection.Vector.ofAll;
 
 
-class ComplexTypeExtractor {
-    private final SimpleTypeExtractor simpleTypeExtractor = new SimpleTypeExtractor();
+class ComplexValueExtractor {
+    private final SimpleValueExtractor simpleValueExtractor = new SimpleValueExtractor();
 
-    List<ComplexType> extract(Object object) {
+    List<ComplexValue> extract(Object object) {
         return ofAll(fieldsFromObject(object))
                 .filter(this::isComplexAndNotInlined)
                 .map(field -> create(field, object))
@@ -28,10 +28,10 @@ class ComplexTypeExtractor {
     }
 
     @SneakyThrows
-    private ComplexType create(Field field, Object object) {
+    private ComplexValue create(Field field, Object object) {
         field.setAccessible(true);
         Object o = field.get(object);
-        List<SimpleType> simpleTypes = simpleTypeExtractor.extract(o);
-        return new ComplexType(nameOf(field), simpleTypes);
+        List<SimpleValue> simpleValues = simpleValueExtractor.extract(o);
+        return new ComplexValue(nameOf(field), simpleValues);
     }
 }

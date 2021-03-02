@@ -3,8 +3,9 @@ package com.noscompany.excel.commons;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.awt.*;
+
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
-import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.*;
 
 @Getter
 public class Config {
@@ -13,11 +14,12 @@ public class Config {
     private int spacesBetweenSheetEntries = 1;
     private int spacesBetweenTables = 1;
     private SheetLayout sheetLayout = VERTICAL;
-    private short tableTitleColor = LIGHT_ORANGE.getIndex();
-    private short recordLabelsColor = LIME.getIndex();
-    private short recordValuesColor = LIGHT_YELLOW.getIndex();
-    private short sheetEntryBackgroundColor = WHITE.getIndex();
+    private Color tableTitleColor = Color.ORANGE;
+    private Color recordLabelsColor = Color.GREEN;
+    private Color recordValuesColor = Color.GREEN;
+    private Color sheetEntryBackgroundColor = Color.WHITE;
     private boolean allowNestedCollections = true;
+    private boolean flattenNestedCollection = true;
     private boolean indexedTableRecords = false;
 
     public enum SheetLayout {
@@ -64,28 +66,33 @@ public class Config {
             return this;
         }
 
-        public Builder tablesTitleColor(short value) {
+        public Builder tablesTitleColor(Color value) {
             config.tableTitleColor = value;
             return this;
         }
 
-        public Builder recordLabelsColor(short value) {
+        public Builder recordLabelsColor(Color value) {
             config.recordLabelsColor = value;
             return this;
         }
 
-        public Builder recordsColor(short value) {
+        public Builder recordsColor(Color value) {
             config.recordValuesColor = value;
             return this;
         }
 
-        public Builder sheetEntryBackgroundColor(short value) {
+        public Builder sheetEntryBackgroundColor(Color value) {
             config.sheetEntryBackgroundColor = value;
             return this;
         }
 
         public Builder allowNestedCollections(boolean value) {
             config.allowNestedCollections = value;
+            return this;
+        }
+
+        public Builder flattenNestedCollections(boolean value) {
+            config.flattenNestedCollection = value;
             return this;
         }
 

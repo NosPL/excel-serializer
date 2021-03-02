@@ -2,28 +2,26 @@ package com.noscompany.excel.sheet.entry.schema.creator;
 
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.annotations.ClassName;
-import com.noscompany.excel.sheet.entry.schema.ComplexType;
+import com.noscompany.excel.sheet.entry.schema.ComplexValue;
 import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.SimpleType;
-import com.noscompany.excel.sheet.entry.schema.TypeCollection;
+import com.noscompany.excel.sheet.entry.schema.SimpleValue;
+import com.noscompany.excel.sheet.entry.schema.ValueCollection;
 import io.vavr.collection.Vector;
 
 import java.util.List;
 import java.util.Objects;
 
 public class SchemaCreator {
-    private final Config config;
-    private final SimpleTypeExtractor simpleTypeExtractor;
-    private final ComplexTypeExtractor complexTypeExtractor;
-    private final ComplexTypeCollectionExtractor complexTypeCollectionExtractor;
-    private final SimpleTypeCollectionExtractor simpleTypeCollectionExtractor;
+    private final SimpleValueExtractor simpleValueExtractor;
+    private final ComplexValueExtractor complexValueExtractor;
+    private final ComplexCollectionExtractor complexCollectionExtractor;
+    private final SimpleCollectionExtractor simpleCollectionExtractor;
 
     public SchemaCreator(Config config) {
-        this.config = config;
-        simpleTypeExtractor = new SimpleTypeExtractor();
-        complexTypeExtractor = new ComplexTypeExtractor();
-        complexTypeCollectionExtractor = new ComplexTypeCollectionExtractor(config);
-        simpleTypeCollectionExtractor = new SimpleTypeCollectionExtractor();
+        simpleValueExtractor = new SimpleValueExtractor();
+        complexValueExtractor = new ComplexValueExtractor();
+        complexCollectionExtractor = new ComplexCollectionExtractor(config);
+        simpleCollectionExtractor = new SimpleCollectionExtractor();
     }
 
     public Schema create(Object object) {
@@ -35,26 +33,26 @@ public class SchemaCreator {
         );
     }
 
-    private List<TypeCollection> collectionFieldsFrom(Object object) {
+    private List<ValueCollection> collectionFieldsFrom(Object object) {
         return complexCollectionFieldsFrom(object)
                 .appendAll(simpleCollectionFieldsFrom(object))
                 .toJavaList();
     }
 
-    private Vector<TypeCollection> complexCollectionFieldsFrom(Object object) {
-        return Vector.ofAll(complexTypeCollectionExtractor.extract(object));
+    private Vector<ValueCollection> complexCollectionFieldsFrom(Object object) {
+        return Vector.ofAll(complexCollectionExtractor.extract(object));
     }
 
-    private List<TypeCollection> simpleCollectionFieldsFrom(Object object) {
-        return simpleTypeCollectionExtractor.extract(object);
+    private List<ValueCollection> simpleCollectionFieldsFrom(Object object) {
+        return simpleCollectionExtractor.extract(object);
     }
 
-    public List<SimpleType> simpleFieldsFrom(Object object) {
-        return simpleTypeExtractor.extract(object);
+    public List<SimpleValue> simpleFieldsFrom(Object object) {
+        return simpleValueExtractor.extract(object);
     }
 
-    public List<ComplexType> complexFieldsFrom(Object object) {
-        return complexTypeExtractor.extract(object);
+    public List<ComplexValue> complexFieldsFrom(Object object) {
+        return complexValueExtractor.extract(object);
     }
 
     private String nameOf(Object object) {

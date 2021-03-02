@@ -4,6 +4,7 @@ import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
 import lombok.Value;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ class IndexedRecordLabels implements RecordLabels {
     }
 
     @Override
-    public short getColor() {
+    public Color getColor() {
         return recordLabels.getColor();
     }
 

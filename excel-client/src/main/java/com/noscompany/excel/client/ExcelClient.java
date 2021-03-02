@@ -3,11 +3,10 @@ package com.noscompany.excel.client;
 import com.noscompany.excel.commons.CellEntry;
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.SheetEntry;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,12 +15,12 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class ExcelClient {
-    private final Workbook workbook;
+    private final XSSFWorkbook workbook;
     private final org.apache.poi.ss.usermodel.Sheet sheet;
     private final CellStyles cellStyles;
 
     public ExcelClient(Config config) {
-        this.workbook = new HSSFWorkbook();
+        this.workbook = new XSSFWorkbook();
         this.sheet = workbook.createSheet();
         this.cellStyles = new CellStyles(config, workbook);
     }

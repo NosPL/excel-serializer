@@ -8,24 +8,29 @@ import java.util.List;
 
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
 import static com.noscompany.excel.serializer.data.SampleData.randomEmployees;
-import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.*;
+import static java.awt.Color.*;
 
 public class ExcelConverterTest {
 
     public static void main(String[] args) {
-        File file = new File("C:\\folder\\Employees.xls");
+        File file = new File("C:\\folder\\Employees.xlsx");
+<<<<<<< HEAD
         List<Employee> employees = randomEmployees(100);
+=======
+        List<Employee> employees = randomEmployees(1000);
+>>>>>>> 1796f9f... improved naming in Config
         Config config = Config.builder()
                 .startingPosition(4, 1)
                 .sheetLayout(VERTICAL)
                 .spacesBetweenSheetEntries(3)
                 .sheetEntryPadding(1)
                 .spacesBetweenTables(1)
-                .tablesTitleColor(LIME.getIndex())
-                .recordLabelsColor(LIGHT_ORANGE.getIndex())
-                .recordsColor(LIGHT_YELLOW.getIndex())
-                .sheetEntryBackgroundColor(AQUA.getIndex())
+                .tablesTitleColor(GREEN)
+                .recordLabelsColor(ORANGE)
+                .recordsColor(WHITE)
+                .sheetEntryBackgroundColor(CYAN)
                 .allowNestedCollections(true)
+                .flattenNestedCollections(true)
                 .indexedTableRecords(true)
                 .build();
         new ExcelSerializer(config)

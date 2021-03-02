@@ -1,13 +1,14 @@
 package com.noscompany.excel.sheet.entry;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.ComplexType;
+import com.noscompany.excel.sheet.entry.schema.ComplexValue;
 import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.TypeCollection;
+import com.noscompany.excel.sheet.entry.schema.ValueCollection;
 import com.noscompany.excel.sheet.entry.table.Table;
 import com.noscompany.excel.sheet.entry.table.Tables;
 import lombok.Value;
 
+import java.awt.*;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -19,8 +20,8 @@ class SchemaToTablesMapper {
     Tables map(Schema schema) {
         return new Tables(
                 mainObjectTable(schema),
-                tablesFromComplexFields(schema),
-                tablesFromCollectionFields(schema)
+                tablesFromComplexValues(schema),
+                tablesFromValueCollections(schema)
         );
     }
 
@@ -32,35 +33,35 @@ class SchemaToTablesMapper {
                 .create();
     }
 
-    private List<Table> tablesFromComplexFields(Schema schema) {
+    private List<Table> tablesFromComplexValues(Schema schema) {
         return schema
-                .getComplexTypes()
+                .getComplexValues()
                 .stream()
                 .map(this::toTable)
                 .collect(toList());
     }
 
-    private List<Table> tablesFromCollectionFields(Schema schema) {
+    private List<Table> tablesFromValueCollections(Schema schema) {
         return schema
-                .getTypeCollections()
+                .getValueCollections()
                 .stream()
                 .map(this::getTable)
                 .collect(toList());
     }
 
-    private Table toTable(ComplexType complexType) {
+    private Table toTable(ComplexValue complexValue) {
         return Table.creator()
-                .title(titleColor(), complexType.getName())
-                .recordLabels(recordLabelsColor(), complexType.fieldNames())
-                .records(recordColor(), List.of(complexType.fieldValues()))
+                .title(titleColor(), complexValue.getName())
+                .recordLabels(recordLabelsColor(), complexValue.fieldNames())
+                .records(recordColor(), List.of(complexValue.fieldValues()))
                 .create();
     }
 
-    private Table getTable(TypeCollection typeCollection) {
+    private Table getTable(ValueCollection valueCollection) {
         return Table.creator()
-                .title(titleColor(), typeCollection.getName())
-                .recordLabels(recordLabelsColor(), typeCollection.getFieldNames())
-                .records(recordColor(), typeCollection.getFieldValues())
+                .title(titleColor(), valueCollection.getName())
+                .recordLabels(recordLabelsColor(), valueCollection.getFieldNames())
+                .records(recordColor(), valueCollection.getFieldValues())
                 .addRecordIndexes(addIndexes())
                 .create();
     }
@@ -69,15 +70,15 @@ class SchemaToTablesMapper {
         return config.isIndexedTableRecords();
     }
 
-    private short recordColor() {
+    private Color recordColor() {
         return config.getRecordValuesColor();
     }
 
-    private short recordLabelsColor() {
+    private Color recordLabelsColor() {
         return config.getRecordLabelsColor();
     }
 
-    private short titleColor() {
+    private Color titleColor() {
         return config.getTableTitleColor();
     }
 }

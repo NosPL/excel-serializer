@@ -5,13 +5,14 @@ import com.noscompany.excel.commons.CellEntry;
 import com.noscompany.excel.sheet.entry.cursor.Cursor;
 import lombok.Value;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Value
 class SimpleRecord implements Record {
     List<String> values;
-    short color;
+    Color color;
 
     @Override
     public List<CellEntry> draw(CellAddress startingPosition, Table.Layout tableLayout) {

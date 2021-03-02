@@ -9,21 +9,21 @@ import static java.util.stream.Collectors.toList;
 @Value
 public class Schema {
     String name;
-    List<SimpleType> simpleTypes;
-    List<ComplexType> complexTypes;
-    List<TypeCollection> typeCollections;
+    List<SimpleValue> simpleValues;
+    List<ComplexValue> complexValues;
+    List<ValueCollection> valueCollections;
 
     public List<String> simpleFieldNames() {
-        return simpleTypes
+        return simpleValues
                 .stream()
-                .map(SimpleType::getName)
+                .map(SimpleValue::getName)
                 .collect(toList());
     }
 
     public List<String> simpleFieldValues() {
-        return simpleTypes
+        return simpleValues
                 .stream()
-                .map(SimpleType::getValue)
+                .map(SimpleValue::getValue)
                 .collect(toList());
     }
 }

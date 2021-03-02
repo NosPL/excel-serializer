@@ -4,6 +4,7 @@ import io.vavr.Tuple2;
 import io.vavr.control.Option;
 import lombok.NoArgsConstructor;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,23 +20,23 @@ public class TableCreator {
     private List<Record> records = new LinkedList<>();
     private boolean addRecordIndexes = false;
 
-    public TableCreator title(short color, String title) {
+    public TableCreator title(Color color, String title) {
         this.title = Option.of(new Title(title, color));
         return this;
     }
 
-    public TableCreator recordLabels(short color, List<String> labels) {
+    public TableCreator recordLabels(Color color, List<String> labels) {
         recordLabels = Option.of(new SimpleRecordLabels(labels, color));
         return this;
     }
 
     @SafeVarargs
-    public final TableCreator records(short color, List<String>... records) {
+    public final TableCreator records(Color color, List<String>... records) {
         this.records = stream(records).map(l -> new SimpleRecord(l, color)).collect(toList());
         return this;
     }
 
-    public TableCreator records(short color, List<List<String>> records) {
+    public TableCreator records(Color color, List<List<String>> records) {
         this.records = records.stream().map(l -> new SimpleRecord(l, color)).collect(toList());
         return this;
     }

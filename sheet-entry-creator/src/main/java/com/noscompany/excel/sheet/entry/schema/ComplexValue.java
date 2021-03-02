@@ -7,19 +7,19 @@ import java.util.List;
 import static io.vavr.collection.Vector.ofAll;
 
 @Value
-public class ComplexType {
+public class ComplexValue {
     String name;
-    List<SimpleType> simpleTypes;
+    List<SimpleValue> simpleValues;
 
     public List<String> fieldNames() {
-        return ofAll(simpleTypes)
-                .map(SimpleType::getName)
+        return ofAll(simpleValues)
+                .map(SimpleValue::getName)
                 .toJavaList();
     }
 
     public List<String> fieldValues() {
-        return ofAll(simpleTypes)
-                .map(SimpleType::getValue)
+        return ofAll(simpleValues)
+                .map(SimpleValue::getValue)
                 .toJavaList();
     }
 
