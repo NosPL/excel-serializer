@@ -47,11 +47,11 @@ public class SchemaCreator {
         return simpleCollectionExtractor.extract(object);
     }
 
-    public List<SimpleValue> simpleFieldsFrom(Object object) {
+    private List<SimpleValue> simpleFieldsFrom(Object object) {
         return simpleValueExtractor.extract(object);
     }
 
-    public List<ComplexValue> complexFieldsFrom(Object object) {
+    private List<ComplexValue> complexFieldsFrom(Object object) {
         return complexValueExtractor.extract(object);
     }
 

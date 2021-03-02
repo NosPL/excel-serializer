@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer.data;
+package com.noscompany.excel.commons.sample.data;
 
 import com.noscompany.excel.commons.annotations.ClassName;
 import com.noscompany.excel.commons.annotations.FieldName;
@@ -24,4 +24,32 @@ public class Employee {
     List<Phone> phones;
     @FieldName(Value = "ALIASY")
     List<String> aliases;
+
+    public String getFirstName() {
+        return name.getFirstName();
+    }
+
+    public String getLastName() {
+        return name.getLastName();
+    }
+
+    public String getDepartmentName() {
+        return department.getName();
+    }
+
+    public String getDepartmentId() {
+        return department.getId();
+    }
+
+    public Address getAddress(int index) {
+        return addresses.get(index);
+    }
+
+    public Phone getPhone(int index) {
+        return phones.get(index);
+    }
+
+    public String getAlias(int index) {
+        return aliases.get(index);
+    }
 }

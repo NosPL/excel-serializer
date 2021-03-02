@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer.data;
+package com.noscompany.excel.commons.sample.data;
 
 import java.time.LocalDate;
 import java.util.Collections;

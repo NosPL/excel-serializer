@@ -1,4 +1,4 @@
-package com.noscompany.excel.serializer.data;
+package com.noscompany.excel.commons.sample.data;
 
 import com.noscompany.excel.commons.annotations.FieldName;
 import lombok.Value;
