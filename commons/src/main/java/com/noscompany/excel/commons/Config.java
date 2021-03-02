@@ -14,10 +14,11 @@ public class Config {
     private int spacesBetweenSheetEntries = 1;
     private int spacesBetweenTables = 1;
     private SheetLayout sheetLayout = VERTICAL;
-    private Color tableTitleColor = Color.ORANGE;
-    private Color recordLabelsColor = Color.GREEN;
-    private Color recordValuesColor = Color.GREEN;
-    private Color sheetEntryBackgroundColor = Color.WHITE;
+    private Color tableTitleColor = Color.GREEN;
+    private Color recordLabelsColor = Color.CYAN;
+    private Color recordIndexColor = Color.PINK;
+    private Color recordValuesColor = Color.WHITE;
+    private Color sheetEntryBackgroundColor = Color.ORANGE;
     private boolean allowNestedCollections = true;
     private boolean flattenNestedCollection = true;
     private boolean indexedTableRecords = false;
@@ -73,6 +74,11 @@ public class Config {
 
         public Builder recordLabelsColor(Color value) {
             config.recordLabelsColor = value;
+            return this;
+        }
+
+        public Builder recordIndexColor(Color value) {
+            config.recordIndexColor = value;
             return this;
         }
 

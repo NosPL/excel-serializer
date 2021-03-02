@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static io.vavr.collection.Vector.ofAll;
+import static java.awt.Color.WHITE;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PACKAGE;
@@ -19,6 +20,7 @@ public class TableCreator {
     private Option<RecordLabels> recordLabels = Option.none();
     private List<Record> records = new LinkedList<>();
     private boolean addRecordIndexes = false;
+    private Color indexColor = WHITE;
 
     public TableCreator title(Color color, String title) {
         this.title = Option.of(new Title(title, color));
@@ -41,8 +43,14 @@ public class TableCreator {
         return this;
     }
 
-    public TableCreator addRecordIndexes(boolean value) {
-        this.addRecordIndexes = value;
+    public TableCreator addRecordIndexes() {
+        this.addRecordIndexes = true;
+        return this;
+    }
+
+    public TableCreator addRecordIndexes(Color color) {
+        this.addRecordIndexes = true;
+        this.indexColor = color;
         return this;
     }
 
@@ -65,7 +73,7 @@ public class TableCreator {
     private Record indexRecord(Tuple2<Record, Integer> tuple) {
         Record record = tuple._1;
         int index = tuple._2 + 1;
-        return new IndexedRecord(index, record);
+        return new IndexedRecord(index, indexColor, record);
     }
 
     private Option<RecordLabels> indexed(Option<RecordLabels> recordLabels) {

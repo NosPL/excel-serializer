@@ -62,8 +62,12 @@ class SchemaToTablesMapper {
                 .title(titleColor(), valueCollection.getName())
                 .recordLabels(recordLabelsColor(), valueCollection.getFieldNames())
                 .records(recordColor(), valueCollection.getFieldValues())
-                .addRecordIndexes(addIndexes())
+                .addRecordIndexes(indexColor())
                 .create();
+    }
+
+    private Color indexColor() {
+        return config.getRecordIndexColor();
     }
 
     private boolean addIndexes() {

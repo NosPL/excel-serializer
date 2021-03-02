@@ -18,12 +18,13 @@ class CellStyles {
     private final XSSFCellStyle defaultCellStyle;
 
     public CellStyles(Config config, XSSFWorkbook workbook) {
-        XSSFCellStyle backgroundStyle = createAwt(workbook, config.getSheetEntryBackgroundColor(), BorderStyle.NONE);
-        XSSFCellStyle labelStyle = createAwt(workbook, config.getTableTitleColor(), BorderStyle.THIN);
-        XSSFCellStyle fieldNamesCellStyle = createAwt(workbook, config.getRecordLabelsColor(), BorderStyle.THIN);
-        XSSFCellStyle fieldValuesCellStyle = createAwt(workbook, config.getRecordValuesColor(), BorderStyle.THIN);
-        XSSFCellStyle defaultCellStyle = createAwt(workbook, Color.WHITE, BorderStyle.THIN);
-        cellStyles = List.of(labelStyle, fieldNamesCellStyle, fieldValuesCellStyle);
+        XSSFCellStyle backgroundStyle = create(workbook, config.getSheetEntryBackgroundColor(), BorderStyle.NONE);
+        XSSFCellStyle labelStyle = create(workbook, config.getTableTitleColor(), BorderStyle.THIN);
+        XSSFCellStyle fieldNamesCellStyle = create(workbook, config.getRecordLabelsColor(), BorderStyle.THIN);
+        XSSFCellStyle fieldValuesCellStyle = create(workbook, config.getRecordValuesColor(), BorderStyle.THIN);
+        XSSFCellStyle indexCellStyle = create(workbook, config.getRecordIndexColor(), BorderStyle.THIN);
+        XSSFCellStyle defaultCellStyle = create(workbook, Color.WHITE, BorderStyle.THIN);
+        cellStyles = List.of(labelStyle, fieldNamesCellStyle, fieldValuesCellStyle, indexCellStyle);
         this.defaultCellStyle = defaultCellStyle;
         this.backgroundCellStyle = backgroundStyle;
     }
@@ -40,7 +41,7 @@ class CellStyles {
         return backgroundCellStyle;
     }
 
-    private XSSFCellStyle createAwt(XSSFWorkbook workbook, Color color, BorderStyle borderStyle) {
+    private XSSFCellStyle create(XSSFWorkbook workbook, Color color, BorderStyle borderStyle) {
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setFillForegroundColor(new XSSFColor(color, null));
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);

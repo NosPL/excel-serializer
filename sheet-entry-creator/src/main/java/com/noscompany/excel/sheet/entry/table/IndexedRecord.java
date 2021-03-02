@@ -13,6 +13,7 @@ import static com.noscompany.excel.sheet.entry.table.Table.Layout.VERTICAL;
 @Value
 class IndexedRecord implements Record {
     int index;
+    Color color;
     Record record;
 
     @Override
@@ -28,11 +29,6 @@ class IndexedRecord implements Record {
     }
 
     private CellEntry index(CellAddress startingPosition) {
-        return new CellEntry(startingPosition, String.valueOf(index), record.getColor());
-    }
-
-    @Override
-    public Color getColor() {
-        return record.getColor();
+        return new CellEntry(startingPosition, String.valueOf(index), color);
     }
 }

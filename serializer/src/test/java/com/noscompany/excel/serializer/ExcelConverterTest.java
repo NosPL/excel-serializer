@@ -24,6 +24,7 @@ public class ExcelConverterTest {
                 .spacesBetweenTables(1)
                 .tablesTitleColor(GREEN)
                 .recordLabelsColor(ORANGE)
+                .recordIndexColor(PINK)
                 .recordsColor(WHITE)
                 .sheetEntryBackgroundColor(CYAN)
                 .allowNestedCollections(true)
