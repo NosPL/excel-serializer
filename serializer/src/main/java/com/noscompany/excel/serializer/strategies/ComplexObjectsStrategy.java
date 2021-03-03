@@ -1,27 +1,41 @@
-package com.noscompany.excel.serializer;
+package com.noscompany.excel.serializer.strategies;
 
 import com.noscompany.excel.client.ExcelClient;
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.SheetEntry;
 import com.noscompany.excel.commons.cursor.Cursor;
+import com.noscompany.excel.serializer.SerializationStrategy;
 import com.noscompany.excel.sheet.entry.SheetEntryCreator;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
+import static com.noscompany.excel.serializer.strategies.Utils.isFlat;
 import static io.vavr.collection.Vector.ofAll;
 
-class ComplexObjectSerializer {
+class ComplexObjectsStrategy implements SerializationStrategy {
     private final Config config;
     private final ExcelClient excelFileWrite;
     private final SheetEntryCreator sheetEntryCreator;
 
-    ComplexObjectSerializer(Config config) {
+    ComplexObjectsStrategy(Config config) {
         this.config = config;
         this.excelFileWrite = new ExcelClient(config);
         this.sheetEntryCreator = new SheetEntryCreator(config);
+    }
+
+    @Override
+    public void serialize(Iterable<?> objects, File file) {
+        List<SheetEntry> sheetEntries = toSheetEntries(objects);
+        excelFileWrite.writeToFile(sheetEntries, file);
+    }
+
+    @Override
+    public boolean accepts(Iterable<?> objects) {
+        return !isFlat(objects);
     }
 
     List<SheetEntry> toSheetEntries(Iterable<?> objects) {
