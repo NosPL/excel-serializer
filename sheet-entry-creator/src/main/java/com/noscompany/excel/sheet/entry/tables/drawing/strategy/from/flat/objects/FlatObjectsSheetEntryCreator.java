@@ -1,10 +1,13 @@
 package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.flat.objects;
 
 import com.noscompany.excel.commons.*;
+import com.noscompany.excel.commons.SheetEntry.Background;
 import com.noscompany.excel.sheet.entry.schema.creator.SchemaCreator;
 import com.noscompany.excel.sheet.entry.table.Table;
+import com.noscompany.excel.sheet.entry.tables.drawing.strategy.BackgroundCreator;
 import com.noscompany.excel.sheet.entry.tables.drawing.strategy.SheetTablesDrawer;
 import io.vavr.collection.Vector;
+import io.vavr.control.Option;
 
 import static com.noscompany.excel.sheet.entry.CellEntriesUtils.surfaceSizeOf;
 import static com.noscompany.excel.sheet.entry.table.Table.Layout.VERTICAL;
@@ -14,11 +17,13 @@ public class FlatObjectsSheetEntryCreator {
     private Config config;
     private SchemaCreator schemaCreator;
     private SchemasToTablesMapper schemasToTablesMapper;
+    private BackgroundCreator backgroundCreator;
 
     public FlatObjectsSheetEntryCreator(Config config) {
         this.config = config;
         this.schemaCreator = new SchemaCreator(config);
         this.schemasToTablesMapper = new SchemasToTablesMapper(config);
+        this.backgroundCreator = new BackgroundCreator(config);
     }
 
     public SheetEntry allToOneEntry(Iterable<?> objects, CellAddress startingPosition) {
@@ -31,17 +36,12 @@ public class FlatObjectsSheetEntryCreator {
     }
 
     private SheetEntry toSheetEntry(CellAddress startingPosition, Vector<CellEntry> cellEntries) {
-        SurfaceSize surfaceSize = paddingOffset(surfaceSizeOf(cellEntries.toJavaList()));
+        Option<Background> background = backgroundCreator.createFor(startingPosition);
+        SurfaceSize surfaceSize = surfaceSizeOf(cellEntries);
         return new SheetEntry(
                 surfaceSize,
                 cellEntries.toJavaList(),
-                startingPosition);
-    }
-
-    private SurfaceSize paddingOffset(SurfaceSize surfaceSize) {
-        return surfaceSize
-                .addHeight(padding() * 2)
-                .addWidth(padding() * 2);
+                background);
     }
 
     private int padding() {

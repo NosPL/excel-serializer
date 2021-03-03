@@ -18,7 +18,8 @@ class CellStyles {
     private final XSSFCellStyle defaultCellStyle;
 
     public CellStyles(Config config, XSSFWorkbook workbook) {
-        XSSFCellStyle backgroundStyle = create(workbook, config.getSheetEntryBackgroundColor(), BorderStyle.NONE);
+        Color backgroundColor = config.getBackgroundConfig().map(Config.BackgroundConfig::getColor).getOrElse(Color.WHITE);
+        XSSFCellStyle backgroundStyle = create(workbook, backgroundColor, BorderStyle.NONE);
         XSSFCellStyle labelStyle = create(workbook, config.getTableTitleColor(), BorderStyle.THIN);
         XSSFCellStyle fieldNamesCellStyle = create(workbook, config.getRecordLabelsColor(), BorderStyle.THIN);
         XSSFCellStyle fieldValuesCellStyle = create(workbook, config.getRecordValuesColor(), BorderStyle.THIN);
@@ -37,10 +38,6 @@ class CellStyles {
                 .orElse(defaultCellStyle);
     }
 
-    CellStyle getBackgroundCellStyle() {
-        return backgroundCellStyle;
-    }
-
     private XSSFCellStyle create(XSSFWorkbook workbook, Color color, BorderStyle borderStyle) {
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setFillForegroundColor(new XSSFColor(color, null));
@@ -53,7 +50,7 @@ class CellStyles {
         return (XSSFCellStyle) setBordersAround((CellStyle) cellStyle, borderStyle);
     }
 
-    private CellStyle setBordersAround(CellStyle cellStyle, BorderStyle borderStyle) {
+    CellStyle setBordersAround(CellStyle cellStyle, BorderStyle borderStyle) {
         cellStyle.setBorderBottom(borderStyle);
         cellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
         cellStyle.setBorderLeft(borderStyle);

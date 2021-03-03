@@ -20,7 +20,7 @@ public class ExcelConverterTest {
                 .startingPosition(4, 1)
                 .sheetLayout(VERTICAL)
                 .spacesBetweenSheetEntries(3)
-//                .setBackground(1, CYAN)
+                .setBackground(1, CYAN)
                 .spacesBetweenTables(1)
                 .tablesTitleColor(GREEN)
                 .recordLabelsColor(ORANGE)

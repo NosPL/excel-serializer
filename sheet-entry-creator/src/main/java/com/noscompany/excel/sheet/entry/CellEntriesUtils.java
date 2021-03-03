@@ -6,14 +6,12 @@ import com.noscompany.excel.commons.SurfaceSize;
 import io.vavr.collection.Vector;
 import io.vavr.control.Option;
 
-import java.util.List;
-
 import static io.vavr.collection.Vector.ofAll;
 
 public class CellEntriesUtils {
 
-    public static SurfaceSize surfaceSizeOf(List<CellEntry> cellEntries) {
-        if (cellEntries.isEmpty())
+    public static SurfaceSize surfaceSizeOf(Iterable<CellEntry> cellEntries) {
+        if (!cellEntries.iterator().hasNext())
             return new SurfaceSize(0, 0);
         int highestColumnIndex = highest(columnIndexFrom(cellEntries)).getOrElse(0);
         int smallestColumnIndex = smallest(columnIndexFrom(cellEntries)).getOrElse(0);

@@ -1,16 +1,18 @@
 package com.noscompany.excel.commons;
 
+import io.vavr.control.Option;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
 import java.awt.*;
 
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
+import static lombok.AccessLevel.PACKAGE;
 
 @Getter
 public class Config {
     private CellAddress startingPosition = new CellAddress(0, 0);
-    private int sheetEntryPadding = 1;
     private int spacesBetweenSheetEntries = 1;
     private int spacesBetweenTables = 1;
     private SheetLayout sheetLayout = VERTICAL;
@@ -18,13 +20,19 @@ public class Config {
     private Color recordLabelsColor = Color.CYAN;
     private Color recordIndexColor = Color.PINK;
     private Color recordValuesColor = Color.WHITE;
-    private Color sheetEntryBackgroundColor = Color.ORANGE;
     private boolean allowNestedCollections = true;
     private boolean flattenNestedCollection = true;
     private boolean indexedTableRecords = false;
+    private Option<BackgroundConfig> backgroundConfig = Option.none();
 
     public enum SheetLayout {
         VERTICAL, HORIZONTAL
+    }
+
+    public int getSheetEntryPadding() {
+        return backgroundConfig
+                .map(BackgroundConfig::getPadding)
+                .getOrElse(0);
     }
 
     public static Builder builder() {
@@ -47,8 +55,22 @@ public class Config {
             return this;
         }
 
-        public Builder sheetEntryPadding(int value) {
-            config.sheetEntryPadding = Math.max(value, 0);
+        public Builder setBackground(int padding) {
+            config.backgroundConfig = config.backgroundConfig
+                    .map(bc -> bc.padding(padding))
+                    .orElse(Option.of(new BackgroundConfig(padding, Color.WHITE)));
+            return this;
+        }
+
+        public Builder setBackground(Color color) {
+            config.backgroundConfig = config.backgroundConfig
+                    .map(bc -> bc.color(color))
+                    .orElse(Option.of(new BackgroundConfig(0, color)));
+            return this;
+        }
+
+        public Builder setBackground(int padding, Color color) {
+            config.backgroundConfig = Option.of(new BackgroundConfig(padding, color));
             return this;
         }
 
@@ -87,11 +109,6 @@ public class Config {
             return this;
         }
 
-        public Builder sheetEntryBackgroundColor(Color value) {
-            config.sheetEntryBackgroundColor = value;
-            return this;
-        }
-
         public Builder allowNestedCollections(boolean value) {
             config.allowNestedCollections = value;
             return this;
@@ -109,6 +126,23 @@ public class Config {
 
         public Config build() {
             return config;
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor(access = PACKAGE)
+    public static class BackgroundConfig {
+        int padding;
+        Color color;
+
+        BackgroundConfig padding(int padding) {
+            this.padding = padding;
+            return this;
+        }
+
+        BackgroundConfig color(Color color) {
+            this.color = color;
+            return this;
         }
     }
 }

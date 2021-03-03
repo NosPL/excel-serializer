@@ -3,6 +3,8 @@ package com.noscompany.excel.client;
 import com.noscompany.excel.commons.CellEntry;
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.SheetEntry;
+import com.noscompany.excel.commons.SurfaceSize;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -31,13 +33,15 @@ public class ExcelClient {
     }
 
     private void writeToSheet(SheetEntry sheetEntry) {
-        paintEntryBackgroundCells(sheetEntry);
+        sheetEntry
+                .getBackground()
+                .peek(background -> drawBackground(background, sheetEntry.getSurfaceSize()));
         sheetEntry
                 .getCellEntries()
-                .forEach(this::setCell);
+                .forEach(this::draw);
     }
 
-    private void setCell(CellEntry cellEntry) {
+    private void draw(CellEntry cellEntry) {
         int row = cellEntry.getCellAddress().getRow();
         int column = cellEntry.getCellAddress().getColumn();
         CellStyle cellStyle = cellStyles.getCellStyleFor(cellEntry.getBackgroundColor());
@@ -47,16 +51,18 @@ public class ExcelClient {
         cell.setCellValue(cellValue);
     }
 
-    private <T> void paintEntryBackgroundCells(SheetEntry sheetEntry) {
-        int startingRow = sheetEntry.getStartingPoint().getRow();
-        int startingColumn = sheetEntry.getStartingPoint().getColumn();
-        int width = sheetEntry.getSurfaceSize().getWidth();
-        int height = sheetEntry.getSurfaceSize().getHeight();
+    private <T> void drawBackground(SheetEntry.Background background, SurfaceSize surfaceSize) {
+        int startingRow = background.getStartingPoint().getRow();
+        int startingColumn = background.getStartingPoint().getColumn();
+        int width = surfaceSize.getWidth();
+        int height = surfaceSize.getHeight();
+        CellStyle cellStyle = cellStyles.getCellStyleFor(background.getColor());
+        cellStyles.setBordersAround(cellStyle, BorderStyle.NONE);
         for (int row = startingRow; row < startingRow + height; row++) {
             for (int column = startingColumn; column < startingColumn + width; column++) {
                 Cell cell = getRow(row)
                         .createCell(column);
-                cell.setCellStyle(cellStyles.getBackgroundCellStyle());
+                cell.setCellStyle(cellStyle);
             }
         }
     }
