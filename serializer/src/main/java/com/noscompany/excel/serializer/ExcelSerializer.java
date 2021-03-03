@@ -3,46 +3,52 @@ package com.noscompany.excel.serializer;
 import com.noscompany.excel.client.ExcelClient;
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.SheetEntry;
-import com.noscompany.excel.commons.cursor.Cursor;
 import com.noscompany.excel.sheet.entry.SheetEntryCreator;
-import io.vavr.collection.Vector;
+import com.noscompany.excel.sheet.entry.schema.creator.SchemaUtils;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-
-import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
 
 public class ExcelSerializer {
     private final Config config;
     private final ExcelClient excelFileWrite;
     private final SheetEntryCreator sheetEntryCreator;
+    private final ComplexObjectSerializer complexObjectSerializer;
 
     public ExcelSerializer(Config config) {
         this.config = config;
         this.excelFileWrite = new ExcelClient(config);
         this.sheetEntryCreator = new SheetEntryCreator(config);
+        this.complexObjectSerializer = new ComplexObjectSerializer(config);
     }
 
-    public void serialize(Iterable<?> objects, File file) {
-        Cursor cursor = cursor();
-        List<SheetEntry> sheetEntries = new LinkedList<>();
-        Vector
-                .ofAll(objects)
-                .filter(Objects::nonNull)
-                .forEach(object -> {
-                    SheetEntry entry = sheetEntryCreator.createFrom(object, cursor.position());
-                    sheetEntries.add(entry);
-                    cursor.moveBy(entry.getSurfaceSize());
-                });
+    public void serialize(Collection<?> objects, File file) {
+        List<SheetEntry> sheetEntries = toSheetEntries(objects);
         excelFileWrite.writeToFile(sheetEntries, file);
     }
 
-    private Cursor cursor() {
-        if (config.getSheetLayout() == VERTICAL)
-            return Cursor.vertical(config.getStartingPosition(), config.getSpacesBetweenSheetEntries());
-        else
-            return Cursor.horizontal(config.getStartingPosition(), config.getSpacesBetweenSheetEntries());
+    private List<SheetEntry> toSheetEntries(Iterable<?> objects) {
+        if (isFlat(objects)) {
+            return complexObjectSerializer.toSheetEntries(objects);
+        } else {
+            SheetEntry sheetEntry = sheetEntryCreator.fromAll(objects, config.getStartingPosition());
+            return List.of(sheetEntry);
+        }
+    }
+
+    private boolean isFlat(Iterable<?> iterable) {
+        if (iterable.iterator().hasNext()) {
+            Object next = iterable.iterator().next();
+            return hasCollectionFields(next);
+        } else
+            return false;
+    }
+
+    private boolean hasCollectionFields(Object next) {
+        return SchemaUtils
+                .fieldsFromClass(next.getClass())
+                .stream()
+                .anyMatch(SchemaUtils::isCollection);
     }
 }

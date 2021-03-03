@@ -20,7 +20,7 @@ public class ExcelConverterTest {
                 .startingPosition(4, 1)
                 .sheetLayout(VERTICAL)
                 .spacesBetweenSheetEntries(3)
-                .sheetEntryPadding(1)
+                .sheetEntryPadding(0)
                 .spacesBetweenTables(1)
                 .tablesTitleColor(GREEN)
                 .recordLabelsColor(ORANGE)
@@ -31,7 +31,6 @@ public class ExcelConverterTest {
                 .flattenNestedCollections(true)
                 .indexedTableRecords(true)
                 .build();
-        new ExcelSerializer(config)
-                .serialize(employees, file);
+        new ExcelSerializer(config).serialize(employees, file);
     }
 }

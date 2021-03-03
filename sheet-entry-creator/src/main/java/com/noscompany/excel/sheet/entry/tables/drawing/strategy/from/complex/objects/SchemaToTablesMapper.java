@@ -1,11 +1,10 @@
-package com.noscompany.excel.sheet.entry;
+package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.objects;
 
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.sheet.entry.schema.ComplexValue;
 import com.noscompany.excel.sheet.entry.schema.Schema;
 import com.noscompany.excel.sheet.entry.schema.ValueCollection;
 import com.noscompany.excel.sheet.entry.table.Table;
-import com.noscompany.excel.sheet.entry.table.Tables;
 import lombok.Value;
 
 import java.awt.*;

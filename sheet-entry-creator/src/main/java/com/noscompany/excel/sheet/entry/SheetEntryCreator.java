@@ -1,45 +1,25 @@
 package com.noscompany.excel.sheet.entry;
 
-import com.noscompany.excel.commons.*;
-import com.noscompany.excel.sheet.entry.layout.SheetEntryLayout;
-import com.noscompany.excel.sheet.entry.layout.SheetEntryLayouts;
-import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.creator.SchemaCreator;
-import com.noscompany.excel.sheet.entry.table.Tables;
-
-import java.util.List;
-
-import static com.noscompany.excel.sheet.entry.CellEntriesUtils.surfaceSizeOf;
+import com.noscompany.excel.commons.CellAddress;
+import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.SheetEntry;
+import com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.objects.ComplexObjectsSheetEntryCreator;
+import com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.flat.objects.FlatObjectsSheetEntryCreator;
 
 public class SheetEntryCreator {
-    private final Config config;
-    private final SchemaCreator schemaCreator;
-    private final SchemaToTablesMapper schemaToTablesMapper;
+    private final FlatObjectsSheetEntryCreator flatObjectsSheetEntryCreator;
+    private final ComplexObjectsSheetEntryCreator complexObjectsSheetEntryCreator;
 
     public SheetEntryCreator(Config config) {
-        this.config = config;
-        this.schemaCreator = new SchemaCreator(config);
-        this.schemaToTablesMapper = new SchemaToTablesMapper(config);
+        this.flatObjectsSheetEntryCreator = new FlatObjectsSheetEntryCreator(config);
+        this.complexObjectsSheetEntryCreator = new ComplexObjectsSheetEntryCreator(config);
     }
 
-    public SheetEntry createFrom(Object object, CellAddress startingPosition) {
-        Schema schema = schemaCreator.create(object);
-        Tables tables = schemaToTablesMapper.map(schema);
-        List<CellEntry> cellEntries = sheetEntryLayout().draw(tables, startingPosition);
-        return new SheetEntry(
-                withPadding(surfaceSizeOf(cellEntries)),
-                cellEntries,
-                startingPosition
-        );
+    public SheetEntry fromSingle(Object object, CellAddress startingPosition) {
+        return complexObjectsSheetEntryCreator.createFrom(object, startingPosition);
     }
 
-    private SheetEntryLayout sheetEntryLayout() {
-        return SheetEntryLayouts._1.get(config);
-    }
-
-    private SurfaceSize withPadding(SurfaceSize surfaceSize) {
-        int padding = config.getSheetEntryPadding();
-        return surfaceSize.addHeight(padding * 2)
-                .addWidth(padding * 2);
+    public SheetEntry fromAll(Iterable<?> objects, CellAddress startingPosition) {
+        return flatObjectsSheetEntryCreator.allToOneEntry(objects, startingPosition);
     }
 }

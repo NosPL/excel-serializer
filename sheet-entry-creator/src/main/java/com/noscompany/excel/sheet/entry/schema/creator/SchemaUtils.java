@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-class SchemaUtils {
+public class SchemaUtils {
     static List<Field> fieldsFromObject(Object object) {
         if (object == null)
             return List.of();
@@ -19,7 +19,7 @@ class SchemaUtils {
             return fieldsFromClass(object.getClass());
     }
 
-    static List<Field> fieldsFromClass(Class<?> aClass) {
+    public static List<Field> fieldsFromClass(Class<?> aClass) {
         return Arrays.asList(aClass.getDeclaredFields());
     }
 
@@ -64,7 +64,7 @@ class SchemaUtils {
                 clazz.isAssignableFrom(Character.class);
     }
 
-    static boolean isCollection(Field field) {
+    public static boolean isCollection(Field field) {
         return isCollection(field.getType());
     }
 

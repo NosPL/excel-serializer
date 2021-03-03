@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.layout;
+package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.objects;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
@@ -7,19 +7,19 @@ import com.noscompany.excel.commons.SurfaceSize;
 import com.noscompany.excel.commons.cursor.Cursor;
 import com.noscompany.excel.sheet.entry.CellEntriesUtils;
 import com.noscompany.excel.sheet.entry.table.Table;
-import com.noscompany.excel.sheet.entry.table.Tables;
+import com.noscompany.excel.sheet.entry.tables.drawing.strategy.SheetTablesDrawer;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class SheetEntryLayout {
+abstract class SheetEntryLayout {
     protected final Config config;
 
-    public SheetEntryLayout(Config config) {
+    SheetEntryLayout(Config config) {
         this.config = config;
     }
 
-    public List<CellEntry> draw(Tables tables, CellAddress startingPosition) {
+    List<CellEntry> draw(Tables tables, CellAddress startingPosition) {
         startingPosition = paddingOffset(startingPosition);
         List<CellEntry> result = new LinkedList<>();
         List<CellEntry> complexFields = drawMainObjectTableAndComplexFieldsTables(tables, startingPosition);
@@ -39,7 +39,7 @@ public abstract class SheetEntryLayout {
 
     protected abstract List<CellEntry> drawCollectionFieldsTables(Tables tables, CellAddress startingPosition);
 
-    protected List<CellEntry> draw(List<Table> tables, CellAddress startingPosition, DrawingDirection drawingDirection, Table.Layout tableLayout) {
+    protected List<CellEntry> draw(List<Table> tables, CellAddress startingPosition, SheetTablesDrawer.DrawingDirection drawingDirection, Table.Layout tableLayout) {
         Cursor cursor = getCursor(startingPosition, drawingDirection);
         List<CellEntry> result = new LinkedList<>();
         tables.forEach(table -> {
@@ -50,8 +50,8 @@ public abstract class SheetEntryLayout {
         return result;
     }
 
-    private Cursor getCursor(CellAddress startingPosition, DrawingDirection drawingDirection) {
-        if (drawingDirection == DrawingDirection.HORIZONTALLY)
+    private Cursor getCursor(CellAddress startingPosition, SheetTablesDrawer.DrawingDirection drawingDirection) {
+        if (drawingDirection == SheetTablesDrawer.DrawingDirection.HORIZONTALLY)
             return Cursor.horizontal(startingPosition, config.getSpacesBetweenTables());
         else
             return Cursor.vertical(startingPosition, config.getSpacesBetweenTables());
