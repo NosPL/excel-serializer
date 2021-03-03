@@ -1,9 +1,11 @@
 package com.noscompany.excel.serializer;
 
+import com.noscompany.excel.commons.JessyObject;
+
 import java.io.File;
 
 public interface SerializationStrategy {
-    void serialize(Iterable<?> objects, File file);
+    void serialize(Iterable<? extends JessyObject> objects, File file);
 
-    boolean accepts(Iterable<?> objects);
+    boolean accepts(Iterable<? extends JessyObject> objects);
 }

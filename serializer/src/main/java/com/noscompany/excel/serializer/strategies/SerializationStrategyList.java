@@ -1,6 +1,7 @@
 package com.noscompany.excel.serializer.strategies;
 
 import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.serializer.SerializationStrategy;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class SerializationStrategyList {
                 new ComplexObjectsStrategy(config));
     }
 
-    public Optional<SerializationStrategy> findFor(Iterable<?> objects) {
+    public Optional<SerializationStrategy> findFor(Iterable<? extends JessyObject> objects) {
         return serializingStrategies
                 .stream()
                 .filter(strategy -> strategy.accepts(objects))

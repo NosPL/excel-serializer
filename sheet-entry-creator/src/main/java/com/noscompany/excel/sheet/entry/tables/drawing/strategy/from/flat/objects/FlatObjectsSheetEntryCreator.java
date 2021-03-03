@@ -26,7 +26,7 @@ public class FlatObjectsSheetEntryCreator {
         this.backgroundCreator = new BackgroundCreator(config);
     }
 
-    public SheetEntry allToOneEntry(Iterable<?> objects, CellAddress startingPosition) {
+    public SheetEntry allToOneEntry(Iterable<? extends JessyObject> objects, CellAddress startingPosition) {
         return Vector
                 .ofAll(objects)
                 .map(schemaCreator::create)

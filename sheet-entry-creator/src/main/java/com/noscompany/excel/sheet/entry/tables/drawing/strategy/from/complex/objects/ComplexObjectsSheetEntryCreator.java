@@ -1,9 +1,6 @@
 package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.objects;
 
-import com.noscompany.excel.commons.CellAddress;
-import com.noscompany.excel.commons.CellEntry;
-import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.commons.SheetEntry;
+import com.noscompany.excel.commons.*;
 import com.noscompany.excel.commons.SheetEntry.Background;
 import com.noscompany.excel.sheet.entry.schema.Schema;
 import com.noscompany.excel.sheet.entry.schema.creator.SchemaCreator;
@@ -27,7 +24,7 @@ public class ComplexObjectsSheetEntryCreator {
         this.backgroundCreator = new BackgroundCreator(config);
     }
 
-    public SheetEntry createFrom(Object object, CellAddress startingPosition) {
+    public SheetEntry createFrom(JessyObject object, CellAddress startingPosition) {
         Schema schema = schemaCreator.create(object);
         Tables tables = schemaToTablesMapper.map(schema);
         List<CellEntry> cellEntries = sheetEntryLayout().draw(tables, startingPosition);

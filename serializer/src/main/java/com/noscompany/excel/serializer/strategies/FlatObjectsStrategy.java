@@ -2,6 +2,7 @@ package com.noscompany.excel.serializer.strategies;
 
 import com.noscompany.excel.client.ExcelClient;
 import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.SheetEntry;
 import com.noscompany.excel.serializer.SerializationStrategy;
 import com.noscompany.excel.sheet.entry.SheetEntryCreator;
@@ -23,13 +24,13 @@ class FlatObjectsStrategy implements SerializationStrategy {
     }
 
     @Override
-    public void serialize(Iterable<?> objects, File file) {
-        SheetEntry sheetEntry = sheetEntryCreator.fromAll(objects, config.getStartingPosition());
+    public void serialize(Iterable<? extends JessyObject> objects, File file) {
+        SheetEntry sheetEntry = sheetEntryCreator.createFrom(objects, config.getStartingPosition());
         excelClient.writeToFile(List.of(sheetEntry), file);
     }
 
     @Override
-    public boolean accepts(Iterable<?> objects) {
+    public boolean accepts(Iterable<? extends JessyObject> objects) {
         return isFlat(objects);
     }
 }

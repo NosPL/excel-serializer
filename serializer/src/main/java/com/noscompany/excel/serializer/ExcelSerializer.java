@@ -1,11 +1,11 @@
 package com.noscompany.excel.serializer;
 
 import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.serializer.strategies.SerializationStrategyList;
 import lombok.NonNull;
 
 import java.io.File;
-import java.util.Optional;
 
 public class ExcelSerializer {
     private final SerializationStrategyList serializingStrategies;
@@ -14,10 +14,9 @@ public class ExcelSerializer {
         this.serializingStrategies = new SerializationStrategyList(config);
     }
 
-    public void serialize(@NonNull Iterable<?> objects, @NonNull File file) {
-        Optional<SerializationStrategy> aFor = serializingStrategies
-                .findFor(objects);
-        aFor
+    public void serialize(@NonNull Iterable<? extends JessyObject> objects, @NonNull File file) {
+        serializingStrategies
+                .findFor(objects)
                 .ifPresent(strategy -> strategy.serialize(objects, file));
     }
 }

@@ -1,5 +1,6 @@
 package com.noscompany.excel.commons.sample.data;
 
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.annotations.ClassName;
 import com.noscompany.excel.commons.annotations.FieldName;
 import com.noscompany.excel.commons.annotations.Inline;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Value
 @ClassName(value = "PRACOWNIK")
-public class Employee {
+public class Employee implements JessyObject {
     @Inline
     Name name;
     @FieldName(Value = "PESEL")

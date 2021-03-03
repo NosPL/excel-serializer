@@ -37,7 +37,7 @@ class Layout_1_Nested_Collections_OFF_Indexes_ON_Test {
 //        when creating sheet entry from employee with random starting position
         CellAddress position = random();
         SheetEntry sheetEntry = sheetEntryCreator
-                .fromSingle(employee, position);
+                .createFrom(employee, position);
 //        then after including offset on padding of sheet entry
         position = paddingOffset(position);
         //@formatter:off

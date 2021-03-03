@@ -1,6 +1,7 @@
 package com.noscompany.excel.sheet.entry.schema.creator;
 
 import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.annotations.ClassName;
 import com.noscompany.excel.sheet.entry.schema.ComplexValue;
 import com.noscompany.excel.sheet.entry.schema.Schema;
@@ -24,7 +25,7 @@ public class SchemaCreator {
         simpleCollectionExtractor = new SimpleCollectionExtractor();
     }
 
-    public Schema create(Object object) {
+    public Schema create(JessyObject object) {
         return new Schema(
                 nameOf(object),
                 simpleFieldsFrom(object),
@@ -33,29 +34,29 @@ public class SchemaCreator {
         );
     }
 
-    private List<ValueCollection> collectionFieldsFrom(Object object) {
+    private List<ValueCollection> collectionFieldsFrom(JessyObject object) {
         return complexCollectionFieldsFrom(object)
                 .appendAll(simpleCollectionFieldsFrom(object))
                 .toJavaList();
     }
 
-    private Vector<ValueCollection> complexCollectionFieldsFrom(Object object) {
+    private Vector<ValueCollection> complexCollectionFieldsFrom(JessyObject object) {
         return Vector.ofAll(complexCollectionExtractor.extract(object));
     }
 
-    private List<ValueCollection> simpleCollectionFieldsFrom(Object object) {
+    private List<ValueCollection> simpleCollectionFieldsFrom(JessyObject object) {
         return simpleCollectionExtractor.extract(object);
     }
 
-    private List<SimpleValue> simpleFieldsFrom(Object object) {
+    private List<SimpleValue> simpleFieldsFrom(JessyObject object) {
         return simpleValueExtractor.extract(object);
     }
 
-    private List<ComplexValue> complexFieldsFrom(Object object) {
+    private List<ComplexValue> complexFieldsFrom(JessyObject object) {
         return complexValueExtractor.extract(object);
     }
 
-    private String nameOf(Object object) {
+    private String nameOf(JessyObject object) {
         Class<?> clazz = object.getClass();
         String result = SchemaUtils.getAnnotation(clazz, ClassName.class)
                 .map(ClassName::value)

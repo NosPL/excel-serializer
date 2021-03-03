@@ -2,6 +2,7 @@ package com.noscompany.excel.serializer.strategies;
 
 import com.noscompany.excel.client.ExcelClient;
 import com.noscompany.excel.commons.Config;
+import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.SheetEntry;
 import com.noscompany.excel.commons.cursor.Cursor;
 import com.noscompany.excel.serializer.SerializationStrategy;
@@ -28,23 +29,23 @@ class ComplexObjectsStrategy implements SerializationStrategy {
     }
 
     @Override
-    public void serialize(Iterable<?> objects, File file) {
+    public void serialize(Iterable<? extends JessyObject> objects, File file) {
         List<SheetEntry> sheetEntries = toSheetEntries(objects);
         excelFileWrite.writeToFile(sheetEntries, file);
     }
 
     @Override
-    public boolean accepts(Iterable<?> objects) {
+    public boolean accepts(Iterable<? extends JessyObject> objects) {
         return !isFlat(objects);
     }
 
-    List<SheetEntry> toSheetEntries(Iterable<?> objects) {
+    List<SheetEntry> toSheetEntries(Iterable<? extends JessyObject> objects) {
         List<SheetEntry> sheetEntries = new LinkedList<>();
         Cursor cursor = cursor();
         ofAll(objects)
                 .filter(Objects::nonNull)
                 .forEach(object -> {
-                    SheetEntry entry = sheetEntryCreator.fromSingle(object, cursor.position());
+                    SheetEntry entry = sheetEntryCreator.createFrom(object, cursor.position());
                     sheetEntries.add(entry);
                     cursor.moveBy(entry.getSurfaceSize());
                 });
