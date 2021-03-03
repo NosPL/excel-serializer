@@ -1,6 +1,7 @@
 package com.noscompany.excel.client;
 
 import com.noscompany.excel.commons.Config;
+import lombok.Getter;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -14,6 +15,7 @@ import java.util.List;
 
 class CellStyles {
     private final List<XSSFCellStyle> cellStyles;
+    @Getter
     private final XSSFCellStyle backgroundCellStyle;
     private final XSSFCellStyle defaultCellStyle;
 

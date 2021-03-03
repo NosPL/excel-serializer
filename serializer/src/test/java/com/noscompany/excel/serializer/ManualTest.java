@@ -1,16 +1,16 @@
 package com.noscompany.excel.serializer;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.commons.sample.data.Employee;
+import com.noscompany.excel.serializer.sample.data.Employee;
 
 import java.io.File;
 import java.util.List;
 
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
-import static com.noscompany.excel.commons.sample.data.SampleData.randomEmployees;
+import static com.noscompany.excel.serializer.sample.data.SampleData.randomEmployees;
 import static java.awt.Color.*;
 
-public class ExcelConverterTest {
+public class ManualTest {
 
     public static void main(String[] args) {
         File file = new File("C:\\folder\\Employees.xlsx");

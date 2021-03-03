@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.utils;
+package com.noscompany.excel.serializer.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

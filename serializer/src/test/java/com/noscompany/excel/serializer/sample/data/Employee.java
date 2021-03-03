@@ -1,4 +1,4 @@
-package com.noscompany.excel.commons.sample.data;
+package com.noscompany.excel.serializer.sample.data;
 
 import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.annotations.ClassName;

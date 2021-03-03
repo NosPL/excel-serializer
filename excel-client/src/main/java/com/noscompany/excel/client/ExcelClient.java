@@ -45,6 +45,7 @@ public class ExcelClient {
         int row = cellEntry.getCellAddress().getRow();
         int column = cellEntry.getCellAddress().getColumn();
         CellStyle cellStyle = cellStyles.getCellStyleFor(cellEntry.getBackgroundColor());
+        cellStyle = cellStyles.setBordersAround(cellStyle, BorderStyle.THIN);
         String cellValue = cellEntry.getCellValue();
         Cell cell = getRow(row).createCell(column);
         cell.setCellStyle(cellStyle);
@@ -56,7 +57,7 @@ public class ExcelClient {
         int startingColumn = background.getStartingPoint().getColumn();
         int width = surfaceSize.getWidth();
         int height = surfaceSize.getHeight();
-        CellStyle cellStyle = cellStyles.getCellStyleFor(background.getColor());
+        CellStyle cellStyle = cellStyles.getBackgroundCellStyle();
         cellStyles.setBordersAround(cellStyle, BorderStyle.NONE);
         for (int row = startingRow; row < startingRow + height; row++) {
             for (int column = startingColumn; column < startingColumn + width; column++) {

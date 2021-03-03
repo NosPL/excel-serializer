@@ -1,47 +1,49 @@
-package com.noscompany.excel.sheet.entry;
+package com.noscompany.excel.serializer;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.commons.SheetEntry;
 import com.noscompany.excel.commons.SurfaceSize;
-import com.noscompany.excel.commons.sample.data.Employee;
+import com.noscompany.excel.serializer.sample.data.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.Random;
 
-import static com.noscompany.excel.commons.sample.data.SampleData.*;
-import static com.noscompany.excel.sheet.entry.utils.Record.r;
-import static com.noscompany.excel.sheet.entry.utils.SheetEntryAssertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.noscompany.excel.serializer.sample.data.SampleData.*;
+import static com.noscompany.excel.serializer.utils.ExcelAssertions.assertThatExcelSheetFrom;
+import static com.noscompany.excel.serializer.utils.Record.r;
+import static java.awt.Color.ORANGE;
 
 class Layout_1_Nested_Collections_OFF_Indexes_ON_Test {
     private Config config;
-    private SheetEntryCreator sheetEntryCreator;
     private Employee employee;
     private final Random random = new Random();
+    private File file;
+    private ExcelSerializer excelSerializer;
 
     @BeforeEach
     void init() {
         config = Config.builder()
+                .setBackground(1, ORANGE)
+                .startingPosition(1, 1)
                 .indexedTableRecords(true)
                 .build();
-        assertTrue(config.isIndexedTableRecords());
-        sheetEntryCreator = new SheetEntryCreator(config);
+        excelSerializer = new ExcelSerializer(config);
+        file = new File("C:\\folder\\Employees.xlsx");
     }
 
     @Test
     void test() {
 //        given that there is random employee with 2 addresses, 2 phones and 3 aliases
         employee = employee(2, 2, 3);
-//        when creating sheet entry from employee with random starting position
-        CellAddress position = random();
-        SheetEntry sheetEntry = sheetEntryCreator
-                .createFrom(employee, position);
+//        when serializing an employee object
+        excelSerializer.serialize(employee, file);
 //        then after including offset on padding of sheet entry
-        position = paddingOffset(position);
+        CellAddress position = paddingOffset(startingPosition());
         //@formatter:off
-        assertThat(sheetEntry)
+//        excel file sheet contains
+        assertThatExcelSheetFrom(file)
                 .at(position)
                 .containsTable(
                         r("PRACOWNIK"),
@@ -57,30 +59,33 @@ class Layout_1_Nested_Collections_OFF_Indexes_ON_Test {
                 .at(addressesOffset(position))
                 .containsTable(
                         r("ADRESY"),
-                        r("",              "streetName",        "streetNumber",     "houseNumber"),
-                        r("1",              streetName(0),       streetNumber(0),    houseNumber(0)),
-                        r("2",              streetName(1),       streetNumber(1),    houseNumber(1)))
+                        r("",              "streetName",   "streetNumber",   "houseNumber"),
+                        r("1",              streetName(0),  streetNumber(0),  houseNumber(0)),
+                        r("2",              streetName(1),  streetNumber(1),  houseNumber(1)))
                 .at(cityOffset(position))
                 .containsTable(
                         r("city"),
-                        r("",              "postalCode",     "cityName"),
-                        r("1",              postalCode(0),    cityName(0)),
-                        r("2",              postalCode(1),    cityName(1)))
+                        r("",              "postalCode",      "cityName"),
+                        r("1",              postalCode(0),     cityName(0)),
+                        r("2",              postalCode(1),     cityName(1)))
                 .at(telNumbersOffset(position))
                 .containsTable(
                         r("NUMERY TEL"),
-                        r("",              "N. KIERUNKOWY", "N. TELEFONU"),
-                        r("1",              areaNum(0),      phoneNum(0)),
-                        r("2",              areaNum(1),      phoneNum(1)))
+                        r("",              "N. KIERUNKOWY",   "N. TELEFONU"),
+                        r("1",              areaNum(0),        phoneNum(0)),
+                        r("2",              areaNum(1),        phoneNum(1)))
                 .at(aliasOffset(position))
                 .containsTable(
                         r("ALIASY"),
                         r("1",              alias(0)),
                         r("2",              alias(1)),
                         r("3",              alias(2)))
-                .andNothingMore()
-                .surfaceSizeEquals(expected());
+                .andNothingMore();
         //@formatter:on
+    }
+
+    private CellAddress startingPosition() {
+        return config.getStartingPosition();
     }
 
     private String departmentId() {
