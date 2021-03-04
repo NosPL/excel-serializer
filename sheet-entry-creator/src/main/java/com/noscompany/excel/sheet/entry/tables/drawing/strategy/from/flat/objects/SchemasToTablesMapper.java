@@ -3,6 +3,7 @@ package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.flat.objec
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.schema.ComplexValue;
 import com.noscompany.excel.commons.schema.Schema;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import com.noscompany.excel.commons.table.Table;
 import com.noscompany.excel.commons.table.TableCreator;
 import io.vavr.Tuple2;
@@ -18,7 +19,8 @@ class SchemasToTablesMapper {
 
     Vector<Table> toTables(Vector<Schema> schemas) {
         return Vector.of(mainTableFrom(schemas))
-                .appendAll(complexValueTablesFrom(schemas));
+                .appendAll(complexValueTablesFrom(schemas))
+                .appendAll(valueCollectionTablesFrom(schemas));
     }
 
     private Table mainTableFrom(Vector<Schema> schemas) {
@@ -40,17 +42,37 @@ class SchemasToTablesMapper {
                 .toJavaList();
     }
 
+    private Iterable<Table> valueCollectionTablesFrom(Vector<Schema> schemas) {
+        return schemas
+                .flatMap(Schema::getValueCollections)
+                .groupBy(ValueCollection::getName)
+                .map(this::toTables);
+    }
+
+    private Table toTables(Tuple2<String, Vector<ValueCollection>> tuple) {
+        String name = tuple._1;
+        Vector<ValueCollection> valueCollections = tuple._2;
+        List<String> recordLabels = valueCollections.headOption().map(ValueCollection::getFieldNames).getOrElse(List.of());
+        List<List<String>> records = valueCollections.flatMap(ValueCollection::getFieldValues).toJavaList();
+        TableCreator tableCreator = Table
+                .creator()
+                .title(titleColor(), name)
+                .recordLabels(labelsColor(), recordLabels)
+                .records(recordsColor(), records);
+        if (config.isIndexedTableRecords())
+            tableCreator.addRecordIndexes(indexColor());
+        return tableCreator.create();
+    }
+
     private Table toTable(Tuple2<String, Vector<ComplexValue>> tuple) {
         String title = tuple._1;
         List<String> recordLabels = tuple._2.headOption().map(ComplexValue::fieldNames).getOrElse(List.of());
         List<List<String>> values = tuple._2.map(ComplexValue::fieldValues).toJavaList();
-        TableCreator tableCreator = Table.creator()
+        return Table
+                .creator()
                 .title(titleColor(), title)
                 .recordLabels(labelsColor(), recordLabels)
-                .records(recordsColor(), values);
-        if (config.isIndexedTableRecords())
-            tableCreator.addRecordIndexes(indexColor());
-        return tableCreator
+                .records(recordsColor(), values)
                 .create();
     }
 
