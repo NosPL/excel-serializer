@@ -1,10 +1,10 @@
 package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.flat.objects;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.ComplexValue;
-import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.table.Table;
-import com.noscompany.excel.sheet.entry.table.TableCreator;
+import com.noscompany.excel.commons.schema.ComplexValue;
+import com.noscompany.excel.commons.schema.Schema;
+import com.noscompany.excel.commons.table.Table;
+import com.noscompany.excel.commons.table.TableCreator;
 import io.vavr.Tuple2;
 import io.vavr.collection.Vector;
 import lombok.AllArgsConstructor;

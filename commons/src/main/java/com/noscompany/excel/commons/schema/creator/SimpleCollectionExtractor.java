@@ -1,6 +1,7 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ValueCollection;
+import io.vavr.collection.Vector;
 import io.vavr.control.Option;
 import lombok.SneakyThrows;
 
@@ -8,15 +9,13 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
-import static com.noscompany.excel.sheet.entry.schema.creator.SchemaUtils.*;
-import static io.vavr.collection.Vector.ofAll;
 import static io.vavr.control.Option.none;
 import static java.util.stream.Collectors.toList;
 
 class SimpleCollectionExtractor {
 
     List<ValueCollection> extract(Object object) {
-        return ofAll(fieldsFromObject(object))
+        return Vector.ofAll(SchemaUtils.fieldsFromObject(object))
                 .filter(SchemaUtils::isCollection)
                 .flatMap(f -> create(object, f))
                 .toJavaList();
@@ -30,9 +29,9 @@ class SimpleCollectionExtractor {
             return none();
         List<String> values;
         Object next = collection.iterator().next();
-        if (isSimple(next.getClass())) {
+        if (SchemaUtils.isSimple(next.getClass())) {
             values = collection.stream().map(Object::toString).collect(toList());
-            return Option.of(new SimpleCollection(nameOf(field), values));
+            return Option.of(new SimpleCollection(SchemaUtils.nameOf(field), values));
         } else {
             return Option.none();
         }

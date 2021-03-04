@@ -4,12 +4,10 @@ import io.vavr.control.Option;
 import lombok.Value;
 
 import java.awt.*;
-import java.util.List;
 
 @Value
 public class SheetEntry {
-    SurfaceSize surfaceSize;
-    List<CellEntry> cellEntries;
+    CellEntries cellEntries;
     Option<Background> background;
 
 
@@ -17,12 +15,14 @@ public class SheetEntry {
         return background
                 .map(Background::getPadding)
                 .map(this::getSurfaceSizeWithPadding)
-                .getOrElse(surfaceSize);
+                .getOrElse(cellEntries.getSurfaceSize());
     }
 
     private SurfaceSize getSurfaceSizeWithPadding(Integer padding) {
-        SurfaceSize surfaceSize = this.surfaceSize.addWidth(padding * 2).addHeight(padding * 2);
-        return surfaceSize;
+        return cellEntries
+                .getSurfaceSize()
+                .addWidth(padding * 2)
+                .addHeight(padding * 2);
     }
 
     @Value

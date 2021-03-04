@@ -1,7 +1,7 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
-import com.noscompany.excel.sheet.entry.schema.ComplexValue;
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ComplexValue;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import lombok.Value;
 
 import java.util.List;

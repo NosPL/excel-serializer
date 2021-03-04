@@ -2,14 +2,10 @@ package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.ob
 
 import com.noscompany.excel.commons.*;
 import com.noscompany.excel.commons.SheetEntry.Background;
-import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.creator.SchemaCreator;
+import com.noscompany.excel.commons.schema.Schema;
+import com.noscompany.excel.commons.schema.creator.SchemaCreator;
 import com.noscompany.excel.sheet.entry.tables.drawing.strategy.BackgroundCreator;
 import io.vavr.control.Option;
-
-import java.util.List;
-
-import static com.noscompany.excel.sheet.entry.CellEntriesUtils.surfaceSizeOf;
 
 public class ComplexObjectsSheetEntryCreator {
     private final Config config;
@@ -27,9 +23,9 @@ public class ComplexObjectsSheetEntryCreator {
     public SheetEntry createFrom(JessyObject object, CellAddress startingPosition) {
         Schema schema = schemaCreator.create(object);
         Tables tables = schemaToTablesMapper.map(schema);
-        List<CellEntry> cellEntries = sheetEntryLayout().draw(tables, startingPosition);
+        CellEntries cellEntries = sheetEntryLayout().draw(tables, startingPosition);
         Option<Background> background = backgroundCreator.createFor(startingPosition);
-        return new SheetEntry(surfaceSizeOf(cellEntries), cellEntries, background);
+        return new SheetEntry(cellEntries, background);
     }
 
     private SheetEntryLayout sheetEntryLayout() {

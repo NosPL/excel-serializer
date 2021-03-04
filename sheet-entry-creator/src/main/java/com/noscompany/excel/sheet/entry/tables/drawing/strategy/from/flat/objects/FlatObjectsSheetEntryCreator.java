@@ -2,16 +2,15 @@ package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.flat.objec
 
 import com.noscompany.excel.commons.*;
 import com.noscompany.excel.commons.SheetEntry.Background;
-import com.noscompany.excel.sheet.entry.schema.creator.SchemaCreator;
-import com.noscompany.excel.sheet.entry.table.Table;
+import com.noscompany.excel.commons.schema.creator.SchemaCreator;
+import com.noscompany.excel.commons.table.Table;
+import com.noscompany.excel.commons.table.TablesSequence;
 import com.noscompany.excel.sheet.entry.tables.drawing.strategy.BackgroundCreator;
-import com.noscompany.excel.sheet.entry.tables.drawing.strategy.SheetTablesDrawer;
 import io.vavr.collection.Vector;
 import io.vavr.control.Option;
 
-import static com.noscompany.excel.sheet.entry.CellEntriesUtils.surfaceSizeOf;
-import static com.noscompany.excel.sheet.entry.table.Table.Layout.VERTICAL;
-import static com.noscompany.excel.sheet.entry.tables.drawing.strategy.SheetTablesDrawer.DrawingDirection.HORIZONTALLY;
+import static com.noscompany.excel.commons.table.Table.Layout.VERTICAL;
+import static com.noscompany.excel.commons.table.TablesSequence.DrawingDirection.HORIZONTAL;
 
 public class FlatObjectsSheetEntryCreator {
     private Config config;
@@ -27,37 +26,30 @@ public class FlatObjectsSheetEntryCreator {
     }
 
     public SheetEntry allToOneEntry(Iterable<? extends JessyObject> objects, CellAddress startingPosition) {
-        return Vector
+        CellEntries cellEntries = Vector
                 .ofAll(objects)
                 .map(schemaCreator::create)
                 .transform(schemasToTablesMapper::toTables)
-                .transform(tables -> draw(tables, startingPosition))
-                .transform(cellEntries -> toSheetEntry(startingPosition, cellEntries));
+                .transform(tables -> draw(tables, startingPosition));
+        return toSheetEntry(startingPosition, cellEntries);
     }
 
-    private SheetEntry toSheetEntry(CellAddress startingPosition, Vector<CellEntry> cellEntries) {
+    private SheetEntry toSheetEntry(CellAddress startingPosition, CellEntries cellEntries) {
         Option<Background> background = backgroundCreator.createFor(startingPosition);
-        SurfaceSize surfaceSize = surfaceSizeOf(cellEntries);
-        return new SheetEntry(
-                surfaceSize,
-                cellEntries.toJavaList(),
-                background);
+        return new SheetEntry(cellEntries, background);
     }
 
     private int padding() {
         return config.getSheetEntryPadding();
     }
 
-    private Vector<CellEntry> draw(Vector<Table> tables, CellAddress cellAddress) {
-        return SheetTablesDrawer
-                .builder()
-                .tables(tables)
-                .drawingDirection(HORIZONTALLY)
+    private CellEntries draw(Vector<Table> tables, CellAddress cellAddress) {
+        return TablesSequence
+                .createFrom(tables)
+                .drawingDirection(HORIZONTAL)
                 .spacesBetweenTables(spacesBetweenTables())
                 .layout(VERTICAL)
-                .startingPosition(paddingOffset(cellAddress))
-                .build()
-                .draw();
+                .draw(paddingOffset(cellAddress));
     }
 
     private int spacesBetweenTables() {

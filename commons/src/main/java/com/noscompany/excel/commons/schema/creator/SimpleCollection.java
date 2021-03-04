@@ -1,6 +1,6 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import lombok.Value;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 import static io.vavr.collection.Vector.ofAll;
 
 @Value
-class SimpleValueCollection implements ValueCollection {
+class SimpleCollection implements ValueCollection {
     String name;
     List<String> fieldValues;
 
@@ -24,9 +24,8 @@ class SimpleValueCollection implements ValueCollection {
 
     @Override
     public ValueCollection concat(ValueCollection valueCollection) {
-        if (valueCollection instanceof SimpleValueCollection) {
-            fieldValues.addAll(((SimpleValueCollection) valueCollection).fieldValues);
-        }
+        if (valueCollection instanceof SimpleCollection)
+            fieldValues.addAll(((SimpleCollection) valueCollection).fieldValues);
         return this;
     }
 }

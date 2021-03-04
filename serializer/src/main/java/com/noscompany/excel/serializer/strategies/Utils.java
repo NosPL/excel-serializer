@@ -1,7 +1,10 @@
 package com.noscompany.excel.serializer.strategies;
 
 import com.noscompany.excel.commons.JessyObject;
-import com.noscompany.excel.sheet.entry.schema.creator.SchemaUtils;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
 
 class Utils {
     static boolean isFlat(Iterable<? extends JessyObject> iterable) {
@@ -13,9 +16,10 @@ class Utils {
     }
 
     private static boolean hasCollectionFields(JessyObject next) {
-        return SchemaUtils
-                .fieldsFromClass(next.getClass())
+        return List
+                .of(next.getClass().getDeclaredFields())
                 .stream()
-                .anyMatch(SchemaUtils::isCollection);
+                .map(Field::getType)
+                .anyMatch(Collection.class::isAssignableFrom);
     }
 }

@@ -1,7 +1,7 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import io.vavr.Tuple2;
 import io.vavr.collection.Vector;
 import lombok.Value;

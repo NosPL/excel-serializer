@@ -1,12 +1,12 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.annotations.ClassName;
-import com.noscompany.excel.sheet.entry.schema.ComplexValue;
-import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.SimpleValue;
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ComplexValue;
+import com.noscompany.excel.commons.schema.Schema;
+import com.noscompany.excel.commons.schema.SimpleValue;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import io.vavr.collection.Vector;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.table;
+package com.noscompany.excel.commons.table;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
@@ -7,8 +7,6 @@ import lombok.Value;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.noscompany.excel.sheet.entry.table.Table.Layout.VERTICAL;
 
 @Value
 class IndexedRecord implements Record {
@@ -20,7 +18,7 @@ class IndexedRecord implements Record {
     public List<CellEntry> draw(CellAddress startingPosition, Table.Layout tableLayout) {
         List<CellEntry> result = new LinkedList<>();
         result.add(index(startingPosition));
-        if (tableLayout == VERTICAL)
+        if (tableLayout == Table.Layout.VERTICAL)
             startingPosition = startingPosition.moveToRight(1);
         else
             startingPosition = startingPosition.moveDown(1);

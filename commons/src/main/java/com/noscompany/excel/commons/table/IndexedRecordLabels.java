@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.table;
+package com.noscompany.excel.commons.table;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.noscompany.excel.sheet.entry.table.Table.Layout.VERTICAL;
+import static com.noscompany.excel.commons.table.Table.Layout.VERTICAL;
 
 @Value
 class IndexedRecordLabels implements RecordLabels {

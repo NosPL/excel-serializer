@@ -1,9 +1,9 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.ComplexValue;
-import com.noscompany.excel.sheet.entry.schema.SimpleValue;
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
+import com.noscompany.excel.commons.schema.ComplexValue;
+import com.noscompany.excel.commons.schema.SimpleValue;
+import com.noscompany.excel.commons.schema.ValueCollection;
 import io.vavr.Tuple2;
 import io.vavr.collection.Vector;
 import lombok.SneakyThrows;
@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
-import static com.noscompany.excel.sheet.entry.schema.creator.SchemaUtils.*;
+import static com.noscompany.excel.commons.schema.creator.SchemaUtils.*;
 import static io.vavr.collection.Vector.of;
 import static io.vavr.collection.Vector.ofAll;
 

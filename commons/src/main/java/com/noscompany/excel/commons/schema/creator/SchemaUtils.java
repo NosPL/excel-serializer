@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.schema.creator;
+package com.noscompany.excel.commons.schema.creator;
 
 import com.noscompany.excel.commons.annotations.ClassName;
 import com.noscompany.excel.commons.annotations.FieldName;
@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class SchemaUtils {
+class SchemaUtils {
     static List<Field> fieldsFromObject(Object object) {
         if (object == null)
             return List.of();
@@ -19,7 +19,7 @@ public class SchemaUtils {
             return fieldsFromClass(object.getClass());
     }
 
-    public static List<Field> fieldsFromClass(Class<?> aClass) {
+    static List<Field> fieldsFromClass(Class<?> aClass) {
         return Arrays.asList(aClass.getDeclaredFields());
     }
 
@@ -64,7 +64,7 @@ public class SchemaUtils {
                 clazz.isAssignableFrom(Character.class);
     }
 
-    public static boolean isCollection(Field field) {
+    static boolean isCollection(Field field) {
         return isCollection(field.getType());
     }
 

@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.table;
+package com.noscompany.excel.commons.table;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;
@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Value
-class SimpleRecordLabels implements RecordLabels {
+class SimpleRecord implements Record {
     List<String> values;
     Color color;
 
@@ -23,11 +23,6 @@ class SimpleRecordLabels implements RecordLabels {
             cursor.move();
         });
         return result;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return values.isEmpty();
     }
 
     private Cursor cursor(CellAddress startingPosition, Table.Layout tableLayout) {

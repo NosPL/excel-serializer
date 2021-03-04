@@ -1,10 +1,11 @@
 package com.noscompany.excel.sheet.entry.tables.drawing.strategy.from.complex.objects;
 
 import com.noscompany.excel.commons.Config;
-import com.noscompany.excel.sheet.entry.schema.ComplexValue;
-import com.noscompany.excel.sheet.entry.schema.Schema;
-import com.noscompany.excel.sheet.entry.schema.ValueCollection;
-import com.noscompany.excel.sheet.entry.table.Table;
+import com.noscompany.excel.commons.schema.ComplexValue;
+import com.noscompany.excel.commons.schema.Schema;
+import com.noscompany.excel.commons.schema.ValueCollection;
+import com.noscompany.excel.commons.table.Table;
+import com.noscompany.excel.commons.table.TablesSequence;
 import lombok.Value;
 
 import java.awt.*;
@@ -18,10 +19,20 @@ class SchemaToTablesMapper {
 
     Tables map(Schema schema) {
         return new Tables(
-                mainObjectTable(schema),
-                tablesFromComplexValues(schema),
+                tablesFromMainObjectAndComplexValues(schema),
                 tablesFromValueCollections(schema)
         );
+    }
+
+    private TablesSequence tablesFromMainObjectAndComplexValues(Schema schema) {
+        Table mainObjectTable = mainObjectTable(schema);
+        List<Table> fromComplexValues = schema
+                .getComplexValues()
+                .stream()
+                .map(this::toTable)
+                .collect(toList());
+        fromComplexValues.add(0, mainObjectTable);
+        return TablesSequence.createFrom(fromComplexValues);
     }
 
     private Table mainObjectTable(Schema schema) {
@@ -32,20 +43,13 @@ class SchemaToTablesMapper {
                 .create();
     }
 
-    private List<Table> tablesFromComplexValues(Schema schema) {
-        return schema
-                .getComplexValues()
-                .stream()
-                .map(this::toTable)
-                .collect(toList());
-    }
-
-    private List<Table> tablesFromValueCollections(Schema schema) {
-        return schema
+    private TablesSequence tablesFromValueCollections(Schema schema) {
+        List<Table> tables = schema
                 .getValueCollections()
                 .stream()
                 .map(this::getTable)
                 .collect(toList());
+        return TablesSequence.createFrom(tables);
     }
 
     private Table toTable(ComplexValue complexValue) {

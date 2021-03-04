@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.table;
+package com.noscompany.excel.commons.table;
 
 import com.noscompany.excel.commons.CellAddress;
 import com.noscompany.excel.commons.CellEntry;

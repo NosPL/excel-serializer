@@ -38,6 +38,7 @@ public class ExcelClient {
                 .peek(background -> drawBackground(background, sheetEntry.getSurfaceSize()));
         sheetEntry
                 .getCellEntries()
+                .get()
                 .forEach(this::draw);
     }
 

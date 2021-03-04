@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.table;
+package com.noscompany.excel.commons.table;
 
 import io.vavr.Tuple2;
 import io.vavr.control.Option;
@@ -21,6 +21,7 @@ public class TableCreator {
     private List<Record> records = new LinkedList<>();
     private boolean addRecordIndexes = false;
     private Color indexColor = WHITE;
+    private Table.Layout layout = Table.Layout.VERTICAL;
 
     public TableCreator title(Color color, String title) {
         this.title = Option.of(new Title(title, color));
@@ -34,17 +35,12 @@ public class TableCreator {
 
     @SafeVarargs
     public final TableCreator records(Color color, List<String>... records) {
-        this.records = stream(records).map(l -> new SimpleRecord(l, color)).collect(toList());
+        this.records.addAll(stream(records).map(l -> new SimpleRecord(l, color)).collect(toList()));
         return this;
     }
 
     public TableCreator records(Color color, List<List<String>> records) {
         this.records = records.stream().map(l -> new SimpleRecord(l, color)).collect(toList());
-        return this;
-    }
-
-    public TableCreator addRecordIndexes() {
-        this.addRecordIndexes = true;
         return this;
     }
 
@@ -54,13 +50,18 @@ public class TableCreator {
         return this;
     }
 
+    public TableCreator layout(Table.Layout layout) {
+        this.layout = layout;
+        return this;
+    }
+
     public Table create() {
         if (addRecordIndexes) {
             recordLabels = indexed(recordLabels);
             records = indexed(records);
         }
         Records records = new Records(recordLabels, this.records);
-        return new Table(title, records);
+        return new Table(title, records, layout);
     }
 
     private List<Record> indexed(List<Record> records) {

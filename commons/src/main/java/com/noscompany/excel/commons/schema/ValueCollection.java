@@ -1,4 +1,4 @@
-package com.noscompany.excel.sheet.entry.schema;
+package com.noscompany.excel.commons.schema;
 
 import java.util.List;
 
