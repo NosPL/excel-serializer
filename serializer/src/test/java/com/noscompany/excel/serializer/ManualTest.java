@@ -26,8 +26,6 @@ public class ManualTest {
                 .recordLabelsColor(ORANGE)
                 .recordIndexColor(PINK)
                 .recordsColor(WHITE)
-                .allowNestedCollections(true)
-                .flattenNestedCollections(true)
                 .indexedTableRecords(true)
                 .build();
         new ExcelSerializer(config).serialize(employees, file);

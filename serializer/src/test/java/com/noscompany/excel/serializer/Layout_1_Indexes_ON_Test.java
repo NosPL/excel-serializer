@@ -15,7 +15,7 @@ import static com.noscompany.excel.serializer.utils.ExcelAssertions.assertThatEx
 import static com.noscompany.excel.serializer.utils.Record.r;
 import static java.awt.Color.ORANGE;
 
-class Layout_1_Nested_Collections_OFF_Indexes_ON_Test {
+class Layout_1_Indexes_ON_Test {
     private Config config;
     private Employee employee;
     private final Random random = new Random();

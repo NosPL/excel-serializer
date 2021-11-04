@@ -23,12 +23,6 @@ class ComplexCollectionExtractor {
     SimpleValueExtractor simpleValueExtractor = new SimpleValueExtractor();
     ComplexValueExtractor complexValueExtractor = new ComplexValueExtractor();
     SimpleCollectionExtractor simpleCollectionExtractor = new SimpleCollectionExtractor();
-    RecursiveCollectionExtractor recursiveCollectionExtractor;
-
-    ComplexCollectionExtractor(Config config) {
-        this.config = config;
-        this.recursiveCollectionExtractor = new RecursiveCollectionExtractor(config, this);
-    }
 
     List<ValueCollection> extract(Object object) {
         return ofAll(fieldsFromObject(object))
@@ -54,10 +48,8 @@ class ComplexCollectionExtractor {
 
     private List<ValueCollection> extract(Field field, Collection<?> collection) {
         ValueCollection valueCollection = toValueCollection(field, collection);
-        Vector<ValueCollection> recursive = recursiveCollectionExtractor.extractRecursively(collection);
         return of(valueCollection)
                 .appendAll(complexValuesGroupedByName(collection))
-                .appendAll(recursive)
                 .toJavaList();
     }
 

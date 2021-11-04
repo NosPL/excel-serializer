@@ -20,8 +20,6 @@ public class Config {
     private Color recordLabelsColor = Color.CYAN;
     private Color recordIndexColor = Color.PINK;
     private Color recordValuesColor = Color.WHITE;
-    private boolean allowNestedCollections = true;
-    private boolean flattenNestedCollection = true;
     private boolean indexedTableRecords = false;
     private Option<BackgroundConfig> backgroundConfig = Option.none();
 
@@ -106,16 +104,6 @@ public class Config {
 
         public Builder recordsColor(Color value) {
             config.recordValuesColor = value;
-            return this;
-        }
-
-        public Builder allowNestedCollections(boolean value) {
-            config.allowNestedCollections = value;
-            return this;
-        }
-
-        public Builder flattenNestedCollections(boolean value) {
-            config.flattenNestedCollection = value;
             return this;
         }
 
