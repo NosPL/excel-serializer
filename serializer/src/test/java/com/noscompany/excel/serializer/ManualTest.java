@@ -2,19 +2,19 @@ package com.noscompany.excel.serializer;
 
 import com.noscompany.excel.commons.Config;
 import com.noscompany.excel.serializer.sample.data.Employee;
+import com.noscompany.excel.serializer.sample.data.SampleData;
 
 import java.io.File;
 import java.util.List;
 
 import static com.noscompany.excel.commons.Config.SheetLayout.VERTICAL;
-import static com.noscompany.excel.serializer.sample.data.SampleData.randomEmployees;
 import static java.awt.Color.*;
 
 public class ManualTest {
 
     public static void main(String[] args) {
-        File file = new File("C:\\folder\\Employees.xlsx");
-        List<Employee> employees = randomEmployees(1000);
+        File file = new File("/home/nos/Desktop/Employees.xlsx");
+        List<Employee> employees = SampleData.randomEmployees(1000);
         Config config = Config
                 .builder()
                 .startingPosition(4, 1)

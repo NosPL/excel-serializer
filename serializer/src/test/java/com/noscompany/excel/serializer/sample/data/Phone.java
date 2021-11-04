@@ -5,8 +5,8 @@ import lombok.Value;
 
 @Value
 public class Phone {
-    @FieldName(Value = "N. KIERUNKOWY")
+    @FieldName(value = "N. KIERUNKOWY")
     String areaCode;
-    @FieldName(Value = "N. TELEFONU")
+    @FieldName(value = "N. TELEFONU")
     String number;
 }

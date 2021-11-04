@@ -24,7 +24,8 @@ public class SampleData {
 
     public static Employee randomEmployee() {
         return new Employee(
-                randomName(),
+                randomFirstName(),
+                randomLastName(),
                 randomPID(),
                 randomBirthDate(),
                 randomDepartment(),
@@ -38,10 +39,6 @@ public class SampleData {
         return new Department(
                 shuffle(new LinkedList<>(of("księgowość", "ochrona", "produkcja"))).get(0),
                 randomUUID().toString().substring(0, 5));
-    }
-
-    public static Name randomName() {
-        return new Name(randomFirstName(), randomLastName());
     }
 
     public static String randomFirstName() {

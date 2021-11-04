@@ -1,6 +1,5 @@
 package com.noscompany.excel.commons.schema.creator;
 
-import com.noscompany.excel.commons.annotations.Inline;
 import com.noscompany.excel.commons.schema.SimpleValue;
 import io.vavr.collection.Vector;
 import lombok.AllArgsConstructor;
@@ -23,9 +22,7 @@ class SimpleValueExtractor {
         field.setAccessible(true);
         if (SchemaUtils.isSimple(field))
             return List.of(new SimpleValue(SchemaUtils.nameOf(field), field.get(object).toString()));
-        else if (field.isAnnotationPresent(Inline.class)) {
-            return extract(field.get(object));
-        } else
+        else
             return List.of();
     }
 }

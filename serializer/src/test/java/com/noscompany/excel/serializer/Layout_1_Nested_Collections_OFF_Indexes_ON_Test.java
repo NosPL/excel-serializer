@@ -191,7 +191,8 @@ class Layout_1_Nested_Collections_OFF_Indexes_ON_Test {
 
     private Employee employee(int addresses, int phones, int aliases) {
         return new Employee(
-                randomName(),
+                randomFirstName(),
+                randomLastName(),
                 randomPID(),
                 randomBirthDate(),
                 randomDepartment(),

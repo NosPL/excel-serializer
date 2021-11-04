@@ -3,7 +3,6 @@ package com.noscompany.excel.serializer.sample.data;
 import com.noscompany.excel.commons.JessyObject;
 import com.noscompany.excel.commons.annotations.ClassName;
 import com.noscompany.excel.commons.annotations.FieldName;
-import com.noscompany.excel.commons.annotations.Inline;
 import lombok.Value;
 
 import java.util.List;
@@ -11,28 +10,22 @@ import java.util.List;
 @Value
 @ClassName(value = "PRACOWNIK")
 public class Employee implements JessyObject {
-    @Inline
-    Name name;
-    @FieldName(Value = "PESEL")
+    @FieldName(value = "IMIE")
+    String firstName;
+    @FieldName(value = "NAZWISKO")
+    String lastName;
+    @FieldName(value = "PESEL")
     String PID;
-    @FieldName(Value = "DATA URODZENIA")
+    @FieldName(value = "DATA URODZENIA")
     String BirthDate;
-    @FieldName(Value = "STANOWISKO")
+    @FieldName(value = "STANOWISKO")
     Department department;
-    @FieldName(Value = "ADRESY")
+    @FieldName(value = "ADRESY")
     List<Address> addresses;
-    @FieldName(Value = "NUMERY TEL")
+    @FieldName(value = "NUMERY TEL")
     List<Phone> phones;
-    @FieldName(Value = "ALIASY")
+    @FieldName(value = "ALIASY")
     List<String> aliases;
-
-    public String getFirstName() {
-        return name.getFirstName();
-    }
-
-    public String getLastName() {
-        return name.getLastName();
-    }
 
     public String getDepartmentName() {
         return department.getName();

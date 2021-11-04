@@ -74,7 +74,7 @@ class SchemaUtils {
 
     static String nameOf(Field field) {
         return getAnnotation(field, FieldName.class)
-                .map(FieldName::Value)
+                .map(FieldName::value)
                 .filter(Objects::nonNull)
                 .filter(s -> !s.isEmpty())
                 .getOrElse(field.getName());

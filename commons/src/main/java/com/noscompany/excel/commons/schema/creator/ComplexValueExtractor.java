@@ -1,6 +1,5 @@
 package com.noscompany.excel.commons.schema.creator;
 
-import com.noscompany.excel.commons.annotations.Inline;
 import com.noscompany.excel.commons.schema.ComplexValue;
 import com.noscompany.excel.commons.schema.SimpleValue;
 import io.vavr.collection.Vector;
@@ -15,13 +14,9 @@ class ComplexValueExtractor {
 
     List<ComplexValue> extract(Object object) {
         return Vector.ofAll(SchemaUtils.fieldsFromObject(object))
-                .filter(this::isComplexAndNotInlined)
+                .filter(SchemaUtils::isComplex)
                 .map(field -> create(field, object))
                 .toJavaList();
-    }
-
-    private boolean isComplexAndNotInlined(Field field) {
-        return SchemaUtils.isComplex(field.getType()) && !field.isAnnotationPresent(Inline.class);
     }
 
     @SneakyThrows

@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class Department {
-    @FieldName(Value = "NAZWA")
+    @FieldName(value = "NAZWA")
     String name;
     String id;
 }
